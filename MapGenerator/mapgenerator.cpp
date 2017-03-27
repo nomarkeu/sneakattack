@@ -64,7 +64,6 @@ int main()
 				draw = false;
 			}
 		}
-	
 
         // draw all the rectangles
 		for (auto& rectangle_ : rectangles)
@@ -98,4 +97,3 @@ int main()
 	
 	return 0;
 }
-
