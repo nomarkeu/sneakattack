@@ -8,6 +8,11 @@ Visibility/
 #DLLs
 *.dll
 
+#Visual Studio stuff
+stdafx.h
+stdafx.cpp
+targetver.h
+
 # User-specific files
 *.suo
 *.user
