@@ -12,6 +12,8 @@ Visibility/
 stdafx.h
 stdafx.cpp
 targetver.h
+*.vcxproj
+*.vcxproj.filters
 
 # User-specific files
 *.suo
