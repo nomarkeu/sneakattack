@@ -8,6 +8,9 @@ Visibility/
 #DLLs
 *.dll
 
+*.vcxproj
+*.vcxproj.filters
+
 # User-specific files
 *.suo
 *.user
