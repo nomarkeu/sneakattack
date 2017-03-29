@@ -61,7 +61,7 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 	
 		
 	triangle[0].position = observer;
-	triangle[0].color = triangle[1].color = triangle[3].color= sf::Color::Blue;
+	triangle[0].color = triangle[1].color = triangle[2].color = sf::Color(151,204,239,100);
 
 	lineSegmentCompare segCompare(observer);
 
