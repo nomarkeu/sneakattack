@@ -3,15 +3,19 @@
 #include <vector>
 #include <iostream>
 #include "visibility.h"
+#include "map.h"
 
 
 int main()
 {
 	Triangles visibilityPolygon;
-	Point observer = {1133.0,98.0};
-	visibility(visibilityPolygon, observer);
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Map Generator");
+	vector<Segment> linesegments; //map
+	Point observer = {500.0,200.0};
+	visibility(visibilityPolygon, observer, linesegments);
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Visibility");
 	
+
+	RectangleMap map(linesegments);
 
 	sf::VertexArray triangle(sf::Triangles, 3);
 
@@ -22,6 +26,7 @@ int main()
 
 		window.clear(sf::Color::White);
 		window.draw(visibilityPolygon.triangles);
+		window.draw(map);
 		window.display();
 	}
 

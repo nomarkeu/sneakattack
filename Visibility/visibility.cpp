@@ -8,7 +8,7 @@
 #include "visibility.h"
 // implement collinear check
 
-void visibility(Triangles& visibilityPolygon,const Point& observer)
+void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segment>& linesegments)
 {
 	
 	
@@ -17,7 +17,7 @@ void visibility(Triangles& visibilityPolygon,const Point& observer)
 		
 	AngleComparator compare(observer);
 
-	vector<Segment> linesegments;
+	//vector<Segment> linesegments;
 	vector<Pointmap> allpoints;
 	mapreader(linesegments, allpoints);
 

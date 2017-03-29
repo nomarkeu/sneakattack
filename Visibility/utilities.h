@@ -2,6 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include <assert.h>
 
+using std::array;
 using std::vector;
 typedef std::array<sf::Vector2f, 2> Segment;
 typedef sf::Vector2f Point;
@@ -112,15 +113,29 @@ struct lineSegmentCompare
 		if (playerside1 == a2side && playerside1 == b2side) return false;
 
 		//if common points
-		if (approx_equal(a1, a2) || approx_equal(a1, b2))
-			//if (whichside(a2, Segment{ a1,player }) != whichside(b1, Segment{ a1,player }))
-				//return (a2.x > b1.x) ? true : false;
-				return playerside2 == b1side;
-		else if (approx_equal(b1, a2) || approx_equal(b1, b2))
+		bool a1a2 = approx_equal(a1, a2);
+		bool a1b2 = approx_equal(a1, b2);
+		bool b1a2 = approx_equal(b1, a2);
+		bool b1b2 = approx_equal(b1, b2);
+
+		if (a1a2 || a1b2) {
 			if (whichside(a2, Segment{ a1,player }) != whichside(b1, Segment{ a1,player }))
-				return (a2.x > b1.x) ? true : false;
+				if(a1a2)
+					return (b1.x > b2.x) ? true : false;
+				else
+					return (b1.x>a2.x) ? true : false;
 			
+			return playerside2 == b1side;
+		}
+		else if (b1a2 || b1b2) {
+			if (whichside(b2, Segment{ b1,player }) != whichside(a1, Segment{ b1,player }))
+				if(b1a2)
+					return (a1.x > b2.x) ? true : false;
+				else
+					return (a1.x > a2.x) ? true : false;
+
 			return playerside2 == a1side;
+		}
 
 		//if collinear
 	}
