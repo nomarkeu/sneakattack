@@ -7,7 +7,7 @@ sneakattack/
 #DLLs
 *.dll
 
-Readme.txt
+*.txt
 
 #Visual Studio stuff
 stdafx.h
