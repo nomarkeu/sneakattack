@@ -17,15 +17,13 @@ int main()
 
 	RectangleMap map(linesegments);
 
-	sf::VertexArray triangle(sf::Triangles, 3);
-
-		
+			
 	while (window.isOpen()) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			window.close();
 
 		window.clear(sf::Color::White);
-		window.draw(visibilityPolygon.triangles);
+		window.draw(visibilityPolygon);
 		window.draw(map);
 		window.display();
 	}

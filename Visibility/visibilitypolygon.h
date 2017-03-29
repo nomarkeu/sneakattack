@@ -16,7 +16,7 @@ public:
 		
 	}
 
-	sf::VertexArray triangles;
+	
 private:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -33,6 +33,6 @@ private:
 		
 	}
 
-
+	sf::VertexArray triangles;
 	
 };

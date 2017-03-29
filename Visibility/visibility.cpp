@@ -135,11 +135,11 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 		}
 	*/
 
-	for (int i = 0; i != 2; i++) {
-		Pointmap& point = allpoints[i];
-		if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
+	for (auto& point : allpoints) {
+			if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
 			triangle[2].position = point.second;
 			visibilityPolygon.append(triangle);
+			break;
 
 			for (auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer) && !approx_equal(segment, insight))
@@ -163,6 +163,7 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 			else {
 				triangle[2].position = intersection(insight, point.second, observer);
 				visibilityPolygon.append(triangle);
+				break;
 				insight = *intersectingSegments.begin();
 				intersectingSegments.clear();
 				triangle[1].position = intersection(insight, point.second, observer);
