@@ -10,7 +10,7 @@ int main()
 {
 	Triangles visibilityPolygon;
 	vector<Segment> linesegments; //map
-	Point observer = {500.0,200.0};
+	Point observer = { 1118.0,127.0};
 	visibility(visibilityPolygon, observer, linesegments);
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Visibility");
 	
@@ -27,6 +27,20 @@ int main()
 		window.draw(map);
 		window.display();
 	}
+
+	/*lineSegmentCompare compare(observer);
+
+	Point s1a({846.000000,221.000000 });
+	Point s1b({ 846.000000,330.000000 });
+	Point s2a({ 595.000000, 251.000000 });
+	Point s2b({ 606.000000, 251.000000 });
+
+
+	Segment s1({ s1a,s1b });
+	Segment s2({ s2a,s2b });
+
+	bool s = compare(s2, s1);*/
+
 
 	return 0;
 }

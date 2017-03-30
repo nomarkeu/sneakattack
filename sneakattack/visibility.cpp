@@ -5,23 +5,21 @@
 #include <vector>
 #include <limits>
 #include <set>
-#include "visibility.h"
+#include "Character.h"
+
 // implement collinear check
 
-
-
-void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segment>& linesegments)
+//void visibility(Triangles& visibilityPolygon,const Point& observer, const vector<Segment>& linesegments, const vector<Pointmap>& allpoints)
+void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints)
 {
-	
-	
-
 	//sort(linesegments.begin(), linesegments.end());
-		
+	visibilityPolygon.clear();
+	const Point& observer = location;
 	AngleComparator compare(observer);
 
 	//vector<Segment> linesegments;
-	vector<Pointmap> allpoints;
-	mapreader(linesegments, allpoints);
+	//vector<Pointmap> allpoints;
+	//mapreader(linesegments, allpoints);
 
 	/*for (auto point : allpoints) {
 		std::cout << point.first<<": "<<point.second.x << ", " << point.second.y << std::endl;
@@ -74,10 +72,10 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 
 	bool first = true;
 
-	for (auto& point : allpoints) {
+	for (const auto& point : allpoints) {
 		
 		if (first) {
-			for (auto& segment : linesegments)
+			for (const auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer) && !coincidentLeftTurn(segment, point.second, observer))
 					intersectingSegments.push_back(segment);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
@@ -92,7 +90,7 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 			triangle[2].position = point.second;
 			visibilityPolygon.append(triangle);
 			
-			for (auto& segment : linesegments)
+			for (const auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer) && !approx_equal(segment,insight) && !coincidentLeftTurn(segment,point.second,observer))
 					intersectingSegments.push_back(segment);
 		//	intersectingSegments;
@@ -104,7 +102,7 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 			continue;
 		}
 		else {
-			for (auto& segment : linesegments)
+			for (const auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer))
 					intersectingSegments.push_back(segment);
 			//intersectingSegments.push_back(insight);

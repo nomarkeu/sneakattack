@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include <assert.h>
-
+#include <array>
 using std::array;
 using std::vector;
 typedef std::array<sf::Vector2f, 2> Segment;
@@ -10,11 +10,14 @@ typedef std::pair<int, Point> Pointmap;
 typedef Point Vector;
 #define pi 3.1415
 
+
+
+
 void mapreader(vector<Segment>& linesegments, vector<Pointmap>& allpoints);
 
 inline bool approx_equal(const float& a, const float& b,  float epsilon = std::numeric_limits<float>::epsilon())
 {
-	epsilon = .001;
+	epsilon = .01;
 	return std::abs(a - b) <= std::max(std::abs(a), std::abs(b)) * epsilon;
 }
 
@@ -105,8 +108,7 @@ struct lineSegmentCompare
 		int playerside2 = whichside(player, s2);
 		int a1side = whichside(a1, s2);
 		int b1side = whichside(b1, s2);
-		if (playerside2 == a1side && playerside2 == b1side) 
-			return true;
+		if (playerside2 == a1side && playerside2 == b1side) return true;
 
 		int playerside1 = whichside(player, s1);
 		int a2side = whichside(a2, s1);
@@ -115,8 +117,8 @@ struct lineSegmentCompare
 		if (a2side == b2side && playerside1 == -a2side)
 			return true;
 
-		if (playerside1 == a2side && playerside1 == b2side) 
-			return false;
+		if (playerside1 == a2side && playerside1 == b2side) return false;
+
 		if (a1side == b1side && playerside2 == -a1side)
 			return false;
 
