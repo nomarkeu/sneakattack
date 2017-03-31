@@ -44,9 +44,10 @@ inline int whichside2(const Point p, const Segment& s)
 {
 	Point a = s[0], b = s[1];
 	float side = (b.y - a.y)*(p.x - a.x) - (p.y - a.y)*(b.x - a.x);
+	if (abs(side)< 0.01f) return 0;
 	if (side < 0.0f) return -1;
 	if (side > 0.0f) return 1;
-	if (approx_equal(side, 0.0f)) return 0;
+	
 }
 
 struct AngleComparator
@@ -60,7 +61,7 @@ struct AngleComparator
 		if (angle < 0.0f) return false;
 		if (angle > 0.0f) return true;
 		else 
-			return true;
+			return false;
 		//return p1.second.x < p2.second.x;
 		//return angle;
 	}

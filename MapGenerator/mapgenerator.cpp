@@ -3,96 +3,104 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include "drawingfunctions.h"
 
 using std::vector;
 
 int main()
 {
-	sf::Vector2f startpoint;
-	sf::Vector2f endpoint;
-	bool draw = false;
-	bool undotrigger = false;
+
+	
+	bool undotrigger = false; //1299 768
 	bool undo = false;
 	vector<sf::RectangleShape> rectangles;
 	sf::Vector2f rectanglesize;
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(),"Map Generator");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Map Generator");//,sf::Style::Fullscreen);
 	sf::Rect<float> rect(static_cast<sf::Vector2<float> >(window.getPosition()), static_cast<sf::Vector2<float> >(window.getSize()));
 
-	sf::RectangleShape rectangle;
-	rectangle.setFillColor(sf::Color::Transparent);
-	rectangle.setOutlineColor(sf::Color::Black);
-	rectangle.setOutlineThickness(2);
+	sf::VertexArray MapLines(sf::Lines);
+	
+	sf::Texture texture;
+	if (!texture.loadFromFile("background.jpg"))
+		throw std::runtime_error("Could not load file player.png");
 
-	sf::Event event;
+
+	sf::Sprite background;
+	background.setTexture(texture);
+	background.setTextureRect(sf::IntRect(0, 0, 1920, 1200));
+	background.setScale(sf::Vector2f(.64, .64));
+
+	bool leftClick = false;
+	bool rightClick = false;
+	bool draw = false;
+	bool secondPointSet = false;
+	bool start = true;
+	bool canStartANewLine = true;
+
+	int i = 0;
+	sf::Vector2f startpoint;
+	sf::Vector2f endpoint;
+
+	//sf::Event event;
 	//start drawing
+
+	//draw is always false in this loop level
 	while (window.isOpen()) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			break;
+		
+
+		drawline(startpoint, MapLines, i, window);
+
+		
+				
+		if (!draw && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			//start = false;
+			draw = true;
+			
+
+			MapLines.append(sf::Vertex(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))));
+			MapLines[i].color = sf::Color::Red;
+			MapLines.append(sf::Vertex(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))));
+			MapLines[i + 1].color = sf::Color::Red;
+		}
+
+		
+
+		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && draw)
+			canStartANewLine = true;
+	
+			
+		if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && draw)
+			MapLines[i+1].position = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+
+		if (canStartANewLine && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			canStartANewLine = false;
+			i += 2;
+			MapLines.append(MapLines[i-1]);
+			MapLines[i].color = sf::Color::Red;
+			MapLines.append(sf::Vertex(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))));
+			MapLines[i + 1].color = sf::Color::Red;
+			}
+
+
+		if (draw && sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+			draw = false;
+		//	i = i - 2;
+		//	MapLines.c
+			MapLines.resize(MapLines.getVertexCount() - 2);
+			
+		}
 
 		window.clear(sf::Color::White);
 
-		// if you're not already drawing a rectangle and if left mouse button is clicked, start drawing rectangle
-		if (!draw && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			startpoint = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-			if (rect.contains(startpoint)) {
-				draw = true;
-				rectangle.setPosition(startpoint);
-			}
-		}
-		// if currently drawing and leftmousebutton was released, stop drawing and store the drawn rectangle
-		else if (draw && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) { 
-			draw = false;
-			rectangles.push_back(rectangle);
-		}
-
-		// if currently drawing a rectangle, display rectangle and continue drawing
-		if (draw == true) {
-			endpoint = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-			rectanglesize = sf::Vector2f(endpoint.x - startpoint.x, endpoint.y - startpoint.y);
-			rectangle.setSize(rectanglesize);
-			window.draw(rectangle);
-		}
-
-		//if Ctr-Z is triggered, remove last drawn rectangle
-		if (!rectangles.empty()) {
-			undotrigger = !draw && sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) && sf::Keyboard::isKeyPressed(sf::Keyboard::Z);
-			if (!undo && undotrigger)
-				undo = true;
-			if (undo && !undotrigger) {
-				rectangles.pop_back();
-				undo = false;
-				draw = false;
-			}
-		}
-
-        // draw all the rectangles
-		for (auto& rectangle_ : rectangles)
-			window.draw(rectangle_);
+		window.draw(background);
+		window.draw(MapLines);
 		
 		window.display();
 } 
 
-	//write drawn rectangles to file
-	if (!rectangles.empty()) {
-		std::ofstream map("map");
 
-		while (map.is_open()) {
-			map.clear();
-			sf::Transform transform;
-			sf::Vector2f point;
-			vector<int> vertex({ 0,1,2,3 });
-			for (auto& rectangle_ : rectangles) {
-				transform = rectangle_.getTransform();
-				for (auto& i : vertex) {
-					point = rectangle_.getPoint(i);
-					point = transform.transformPoint(point);
-					map << point.x << "," << point.y << ";";
-				}
-				map << std::endl;
-			}
-			map.close();
-		}
-	}
 	window.close();
 	
 	return 0;

@@ -12,7 +12,7 @@ Player::Player() : Character(200.0f), runSpeed(2*speed), Map("mapfile")
 	
 	if (!texture.loadFromFile("player.png")) throw std::runtime_error("Could not load file player.png");
 	sprite.setTexture(&texture);
-	sprite.setRadius(50.0f);
+	sprite.setRadius(25.0f);
 	sf::FloatRect boundingBox = sprite.getLocalBounds();
 	sprite.setOrigin(boundingBox.width / 2.f, boundingBox.height / 2.f);
 	location = Point(444.025f, 257.821f) ;
@@ -43,7 +43,8 @@ void Player::move( std::map<key, bool>&  pressedKeys,const float& dtAsSeconds)
 
 void Player::update()
 {
-	sprite.setPosition(Point(location.x, location.y));
+	sprite.setPosition(Point(int(location.x), int(location.y)));
 	visibilityPolygon.clear();
 	visibility( Map.getLineSegments(), Map.getAllPoints());
+	visibilityPolygon.setTexture();
 }

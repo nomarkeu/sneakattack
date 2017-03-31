@@ -30,7 +30,18 @@ public:
 	
 	Triangles() {
 		triangles.setPrimitiveType(sf::Triangles);
+		if (!texture.loadFromFile("visibility.png"))
+			throw std::runtime_error("Couldn't load visibility file");
 		
+	}
+
+	void setTexture()
+	{
+		int size = triangles.getVertexCount();
+		for (int i = 0; i < size; i++) {
+			triangles[i].texCoords = triangles[i].position;
+		}
+
 	}
 
 	
@@ -42,7 +53,7 @@ private:
 		states.transform *= getTransform();
 
 		// apply the tileset texture
-		states.texture = NULL;
+		states.texture = &texture;
 
 		// draw the vertex array
 		target.draw(triangles, states);
@@ -51,5 +62,6 @@ private:
 	}
 
 	sf::VertexArray triangles;
+	sf::Texture texture;
 	
 };

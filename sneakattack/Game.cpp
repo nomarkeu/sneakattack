@@ -34,18 +34,16 @@ Game::Game() : gameState(State::running), Map("mapfile")
 
 void Game::start()
 {
+
 	sf::Clock clock;
+	//window.setFramerateLimit(60);
+	//window.setVerticalSyncEnabled(true);
 
 	while (window.isOpen())
 	{
 		// Restart the clock and save the elapsed time into dt
-		sf::Time dt = clock.restart();
-
-		// Make a fraction from the delta time
-		float dtAsSeconds = dt.asSeconds();
-
-		input();
-		update(dtAsSeconds);
+	
+		update(clock);
 
 		if (gameState == State::running)
 			draw();

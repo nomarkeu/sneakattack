@@ -73,7 +73,7 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 	
 		
 	triangle[0].position = observer;
-	triangle[0].color = triangle[1].color = triangle[2].color = sf::Color(151,204,239,100);
+//	triangle[0].color = triangle[1].color = triangle[2].color = sf::Color(151,204,239,100);
 
 	lineSegmentCompare segCompare(observer);
 
@@ -110,7 +110,7 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 		//	intersectingSegments;
 			//intersectingSegments.erase(insight);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
-			insight = *intersectingSegments.begin();
+				insight = *intersectingSegments.begin();
 			intersectingSegments.clear();
 			triangle[1].position = intersection(insight, point.second, observer);
 			continue;

@@ -29,6 +29,6 @@ private:
 	bool thereIsInput();
 	void gameOver();
 	void input();
-	void update(float);
+	void update(sf::Clock&);
 	void draw();
 };

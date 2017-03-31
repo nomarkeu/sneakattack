@@ -3,12 +3,17 @@
 #include <iostream>
 #include <iomanip>
 
- void Game::update(float dtAsSeconds)
+ void Game::update(sf::Clock& clock)
 {
+	 input();
+
+	 sf::Time dt = clock.restart();
+	 float dtAsSeconds = dt.asSeconds();
+
 	 if (thereIsInput()) {
 		 player.move(pressedKeys, dtAsSeconds);
-		 std::streamsize prec = std::cout.precision();
-		 std::cout << std::setprecision(8) <<player.getLocation().x << "," << player.getLocation().y << std::endl << "------" << std::setprecision(prec) << std::endl;
+		// std::streamsize prec = std::cout.precision();
+		 //std::cout << std::setprecision(8) <<player.getLocation().x << "," << player.getLocation().y << std::endl << "------" << std::setprecision(prec) << std::endl;
 	 }
 	 
 
@@ -20,5 +25,5 @@
 	//	 gameState = State::spotted;
 
 
-	 //enemy.move(dtAsSeconds);
+	 enemy.move(dtAsSeconds);
 }

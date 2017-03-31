@@ -8,27 +8,27 @@
 
 int main()
 {
-	Triangles visibilityPolygon;
-	vector<Segment> linesegments; //map
+	//Triangles visibilityPolygon;
+	//vector<Segment> linesegments; //map
 	Point observer;
-	observer.x = 159.727173f;
-	observer.y = 505.996643f;
-	visibility(visibilityPolygon, observer, linesegments);
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Visibility");
-	
+	observer.x = 552.124695f;
+	observer.y = 554.683105f;
+	//visibility(visibilityPolygon, observer, linesegments);
+	//sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Visibility");
+	//
 
-	RectangleMap map(linesegments);
+	//RectangleMap map(linesegments);
 
-			
-	while (window.isOpen()) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-			window.close();
+	//		
+	//while (window.isOpen()) {
+	//	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	//		window.close();
 
-		window.clear(sf::Color::White);
-		window.draw(visibilityPolygon);
-		window.draw(map);
-		window.display();
-	}
+	//	window.clear(sf::Color::White);
+	//	window.draw(visibilityPolygon);
+	//	window.draw(map);
+	//	window.display();
+	//}
 
 	/*lineSegmentCompare compare(observer);
 
@@ -43,6 +43,15 @@ int main()
 
 	bool s = compare(s2, s1);*/
 
+	Point a1({ 595.000000f,506.000000f});
+	Point a2({ 846.000000f,221.000000f });
+
+	Pointmap p1(15,a1);
+	Pointmap p2(17,a2);
+
+	AngleComparator compare(observer);
+
+	bool angle = compare(p1, p2);
 
 	return 0;
 }

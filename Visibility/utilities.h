@@ -57,10 +57,12 @@ struct AngleComparator
 	bool operator()(const Pointmap& p1, const Pointmap& p2) const
 	{
 		float angle = GetAngleABC(p1.second, player, p2.second);
-		if (angle < 0.0f) return false;
-		if (angle > 0.0f) return true;
-		else
+		if (angle < 0.0f) 
+			return false;
+		if (angle > 0.0f) 
 			return true;
+		else
+			return false;
 		//return p1.second.x < p2.second.x;
 		//return angle;
 	}
@@ -76,16 +78,16 @@ private:
 		float cross = (ab.x * b.y - ab.y * b.x); // cross product
 
 		float alpha1 = atan2(cross, dot);
-		alpha1 = alpha1 < 0.0f ? 2.0f * pi + alpha1 : alpha1;
+		alpha1 = (alpha1 < 0.0f ? 2.0f * pi + alpha1 : alpha1)*100000.f;
 
 
 		dot = (b.x * cb.x + b.y * cb.y); // dot product
 		cross = (b.y * cb.x - b.x * cb.y); // cross product
 
 		float alpha2 = atan2(cross, dot);
-		alpha2 = alpha2 < 0.0f ? 2.0f * pi + alpha2 : alpha2;
+		alpha2 = (alpha2 < 0.0f ? 2.0f * pi + alpha2 : alpha2)*100000.f;
 
-		return ((alpha1 - alpha2) * 180.0f / pi)*100.0f;
+		return ((alpha1 - alpha2) * 180.0f / pi);
 	};
 
 
