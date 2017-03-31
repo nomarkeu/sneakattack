@@ -74,11 +74,11 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 
 	bool first = true;
 
-	for (auto& point : allpoints) {
-		
+	for (const auto& point : allpoints) {
+
 		if (first) {
-			for (auto& segment : linesegments)
-				if (intersecting(segment, point.second, observer) && !coincidentLeftTurn(segment, point.second, observer))
+			for (const auto& segment : linesegments)
+				if (intersecting(segment, point.second, observer) && !(coincidentLeftTurn(segment, point.second, observer)))
 					intersectingSegments.push_back(segment);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 			insight = *intersectingSegments.begin();
@@ -87,15 +87,15 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 			first = false;
 			continue;
 		}
-/*--------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------*/
 		if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
 			triangle[2].position = point.second;
 			visibilityPolygon.append(triangle);
-			
-			for (auto& segment : linesegments)
-				if (intersecting(segment, point.second, observer) && !approx_equal(segment,insight) && !coincidentLeftTurn(segment,point.second,observer))
+
+			for (const auto& segment : linesegments)
+				if (intersecting(segment, point.second, observer) && !approx_equal(segment, insight) && !coincidentLeftTurn(segment, point.second, observer))
 					intersectingSegments.push_back(segment);
-		//	intersectingSegments;
+			//	intersectingSegments;
 			//intersectingSegments.erase(insight);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 			insight = *intersectingSegments.begin();
@@ -104,7 +104,7 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 			continue;
 		}
 		else {
-			for (auto& segment : linesegments)
+			for (const auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer))
 					intersectingSegments.push_back(segment);
 			//intersectingSegments.push_back(insight);
@@ -128,22 +128,24 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 
 	/*auto& point = allpoints[0];
 	if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
-		triangle[2].position = point.second;
-		;
+	triangle[2].position = point.second;
+	;
 	}
 	else {
-		for (auto& segment : linesegments)
-			if (intersecting(segment, point.second, observer))
-				intersectingSegments.insert(segment);
-			triangle[2].position = intersection(insight, point.second, observer);
-			visibilityPolygon.append(triangle);
-		}
+	for (auto& segment : linesegments)
+	if (intersecting(segment, point.second, observer))
+	intersectingSegments.insert(segment);
+	triangle[2].position = intersection(insight, point.second, observer);
+	visibilityPolygon.append(triangle);
+	}
 	*/
 
 	for (auto& point : allpoints) {
-			if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
+		if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
 			triangle[2].position = point.second;
 			visibilityPolygon.append(triangle);
+			if (whichside(visibilityPolygon.begin(), insight) == 0)
+				visibilityPolygon.tieUpTheEnds(observer);
 			break;
 
 			for (auto& segment : linesegments)
@@ -170,6 +172,8 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 			else {
 				triangle[2].position = intersection(insight, point.second, observer);
 				visibilityPolygon.append(triangle);
+				if (whichside(visibilityPolygon.begin(), insight) == 0)
+					visibilityPolygon.tieUpTheEnds(observer);
 				break;
 				insight = *intersectingSegments.begin();
 				intersectingSegments.clear();
@@ -182,8 +186,6 @@ void visibility(Triangles& visibilityPolygon,const Point& observer, vector<Segme
 	}
 
 
+	//
+
 }
-
-
-
-

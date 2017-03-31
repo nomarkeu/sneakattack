@@ -8,16 +8,13 @@ typedef std::array<sf::Vector2f, 2> Segment;
 typedef sf::Vector2f Point;
 typedef std::pair<int, Point> Pointmap;
 typedef Point Vector;
-#define pi 3.1415
-
-
-
+#define pi 3.14159265358f
 
 void mapreader(vector<Segment>& linesegments, vector<Pointmap>& allpoints);
 
 inline bool approx_equal(const float& a, const float& b,  float epsilon = std::numeric_limits<float>::epsilon())
 {
-	epsilon = .01;
+	epsilon = .01f;
 	return std::abs(a - b) <= std::max(std::abs(a), std::abs(b)) * epsilon;
 }
 
@@ -37,18 +34,19 @@ inline int whichside(const Point p, const Segment& s)
 {
 	Point a = s[0], b = s[1];
 	float side = (b.y - a.y)*(p.x - a.x) - (p.y - a.y)*(b.x - a.x);
-	if (side < 0) return -1;
-	if (side > 0) return 1;
-	if (approx_equal(side, 0.0)) return 0;
+	if (abs(side)< 0.01f) return 0;
+	if (side < 0.0f) return -1;
+	if (side > 0.0f) return 1;
+	
 }
 
 inline int whichside2(const Point p, const Segment& s)
 {
 	Point a = s[0], b = s[1];
 	float side = (b.y - a.y)*(p.x - a.x) - (p.y - a.y)*(b.x - a.x);
-	if (side < 0.0) return -1;
-	if (side > 0.0) return 1;
-	if (approx_equal(side, 0.0)) return 0;
+	if (side < 0.0f) return -1;
+	if (side > 0.0f) return 1;
+	if (approx_equal(side, 0.0f)) return 0;
 }
 
 struct AngleComparator
@@ -59,8 +57,8 @@ struct AngleComparator
 	bool operator()(const Pointmap& p1, const Pointmap& p2) const
 	{
 		float angle = GetAngleABC(p1.second, player, p2.second);
-		if (angle < 0) return false;
-		if (angle > 0) return true;
+		if (angle < 0.0f) return false;
+		if (angle > 0.0f) return true;
 		else 
 			return true;
 		//return p1.second.x < p2.second.x;
@@ -78,16 +76,16 @@ private:
 		float cross = (ab.x * b.y - ab.y * b.x); // cross product
 
 		float alpha1 = atan2(cross, dot);
-		alpha1 = alpha1 < 0 ? 2 * pi + alpha1 : alpha1;
+		alpha1 = alpha1 < 0.0f ? 2.0f * pi + alpha1 : alpha1;
 
 
 		 dot = (b.x * cb.x + b.y * cb.y); // dot product
 		 cross = ( b.y * cb.x - b.x * cb.y); // cross product
 
 		float alpha2 = atan2(cross, dot);
-		alpha2 = alpha2 < 0 ? 2 * pi + alpha2 : alpha2;
+		alpha2 = alpha2 < 0.0f ? 2.0f * pi + alpha2 : alpha2;
 
-		return ((alpha1-alpha2) * 180. / pi)*100.0;
+		return ((alpha1-alpha2) * 180.0f / pi)*100.0f;
 	};
 
 
@@ -161,7 +159,7 @@ inline Point intersection(const Segment& segment, const Point& point, const Poin
 {   
 	float dx = observer.x - point.x;
 	float dy = observer.y - point.y;
-	assert(dx != 0);
+	assert(dx != 0.0f);
 	float m1 = dy / dx;
 
 	dx = segment[1].x - segment[0].x;
@@ -190,7 +188,7 @@ inline Point intersection(const Segment& segment, const Point& point, const Poin
 
 		 c2 = segment[1].y - m2 * segment[1].x; 
 
-		assert((m1 - m2) != 0);
+		assert((m1 - m2) != 0.0f);
 		 intersection_X = (c2 - c1) / (m1 - m2);
 		 intersection_Y = m1 * intersection_X + c1;
 	}
@@ -227,7 +225,7 @@ inline bool intersecting(const Segment& segment, const Point& point, const Point
 
 }
 
-
+//checks if c is right of the vector  ba
 inline bool isrightturn(const Point& a, const Point& b, const Point& c) 
 {
 	Vector ba = { a.x - b.x,a.y - b.y };
@@ -237,7 +235,7 @@ inline bool isrightturn(const Point& a, const Point& b, const Point& c)
 
 	float crossproduct = ba.x*bc.y - ba.y*bc.x;
 
-		if (crossproduct > 0)
+		if (crossproduct > 0.0f && !approx_equal(crossproduct/1000000000000.0f,0.0))
 			return true;		//is right turn
 		/*else if (crossproduct>0)
 			left turn;

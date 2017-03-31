@@ -8,13 +8,13 @@
 Enemy::Enemy(): Character(50.0), isAlive(true)
 {
 	turning = false;
-	turningSpeed = 90; //degrees per second;
-	heading = 0;
-	targetHeading = 0;
-	attackRange = 25.0;
-	sprite.setRadius(10.0);
+	turningSpeed = 90.f; //degrees per second;
+	heading = 0.f;
+	targetHeading = 0.f;
+	attackRange = 25.0f;
+	sprite.setRadius(10.0f);
 	sf::FloatRect boundingBox = sprite.getLocalBounds();
-	sprite.setOrigin(boundingBox.width / 2, boundingBox.height / 2);
+	sprite.setOrigin(boundingBox.width / 2.f, boundingBox.height / 2.f);
 	sprite.setFillColor(sf::Color::Red);
 	try { setPath(); }
 	catch (const std::exception& e) { std::cout << e.what(); }
@@ -23,7 +23,7 @@ Enemy::Enemy(): Character(50.0), isAlive(true)
 	viewcone.setPointCount(3);
 	viewcone.setFillColor(sf::Color(161, 207, 223,100));
 	setViewcone();
-	takeAStep(.01);
+	takeAStep(.01f);
 	heading = targetHeading;
 	update();
 }
@@ -31,7 +31,7 @@ Enemy::Enemy(): Character(50.0), isAlive(true)
 void Enemy::setPath()
 {
 	std::ifstream pathFile("enemyPath");
-	double line;
+//	double line;
 	Point point;
 	char comma;
 	if (pathFile.is_open()) 
@@ -70,7 +70,7 @@ void Enemy::takeAStep(const float& dtAsSeconds)
 	float dy = pointAhead->y - location.y;
 	Point newLocation((location.x)+dx*ratio,(location.y)+dy*ratio);
 	location = newLocation;
-	targetHeading = 180.0*std::atan2(-dx, dy) / 3.14;
+	targetHeading = 180.0f*std::atan2(-dx, dy) / 3.14f;
 	if (signbit(targetHeading - heading)) turnDirection = -1;
 	else turnDirection = 1;
 }
@@ -86,8 +86,8 @@ void Enemy::setViewcone()
 	viewcone.setOrigin(location);
 	viewcone.setPosition(location);
 	viewcone.setPoint(0, location);
-	viewcone.setPoint(1, location - Point(200, -500));
-	viewcone.setPoint(2, location + Point(200, 500));
+	viewcone.setPoint(1, location - Point(200.f, -500.f));
+	viewcone.setPoint(2, location + Point(200.f, 500.f));
 	viewcone.setRotation(heading);	
 }
 

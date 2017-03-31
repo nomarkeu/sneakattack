@@ -1,10 +1,22 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include "utilities.h"
 
 class Triangles : public sf::Drawable, public sf::Transformable
 {
 public:
 	
+	void tieUpTheEnds(const Point& observer)
+	{
+		if (isrightturn(triangles[1].position, observer, triangles[triangles.getVertexCount() - 1].position))
+			triangles[triangles.getVertexCount()-1] = triangles[1];
+	}
+
+	const Point begin() const
+	{
+		return triangles[1].position;
+	}
+
 	void clear()
 	{
 		triangles.clear();

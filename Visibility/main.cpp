@@ -10,7 +10,9 @@ int main()
 {
 	Triangles visibilityPolygon;
 	vector<Segment> linesegments; //map
-	Point observer = { 1118.0,127.0};
+	Point observer;
+	observer.x = 159.727173f;
+	observer.y = 505.996643f;
 	visibility(visibilityPolygon, observer, linesegments);
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Visibility");
 	

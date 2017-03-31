@@ -7,14 +7,25 @@
 #include <set>
 #include "Character.h"
 
+int Round(float x) {
+	assert(x >= LONG_MIN - 0.5);
+	assert(x <= LONG_MAX + 0.5);
+	if (x >= 0)
+		return (int)(x + 0.5);
+	return (int)(x - 0.5);
+}
+
 // implement collinear check
 
 //void visibility(Triangles& visibilityPolygon,const Point& observer, const vector<Segment>& linesegments, const vector<Pointmap>& allpoints)
 void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints)
 {
 	//sort(linesegments.begin(), linesegments.end());
-	visibilityPolygon.clear();
+	
 	const Point& observer = location;
+	//observer.x = Round(location.x);
+	//observer.y=Round(location.y);
+
 	AngleComparator compare(observer);
 
 	//vector<Segment> linesegments;
@@ -26,13 +37,14 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 	}
 	std::cout << "-----------" << std::endl;
 	getchar();
+	
 
 	for (auto a : allpoints)
 		for (auto b : allpoints)
 			std::cout << compare(a, b)<<std::endl;
 	getchar();*/
 
-
+	
 	sort(allpoints.begin(), allpoints.end(), compare);
 	
 	
@@ -72,11 +84,13 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 
 	bool first = true;
 
+	//bool fixtriangle = false;
+
 	for (const auto& point : allpoints) {
 		
 		if (first) {
 			for (const auto& segment : linesegments)
-				if (intersecting(segment, point.second, observer) && !coincidentLeftTurn(segment, point.second, observer))
+				if (intersecting(segment, point.second, observer) && !(coincidentLeftTurn(segment, point.second, observer)))
 					intersectingSegments.push_back(segment);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 			insight = *intersectingSegments.begin();
@@ -142,6 +156,8 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 			if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
 			triangle[2].position = point.second;
 			visibilityPolygon.append(triangle);
+			if (whichside(visibilityPolygon.begin(), insight)==0)
+				visibilityPolygon.tieUpTheEnds(observer);
 			break;
 
 			for (auto& segment : linesegments)
@@ -168,6 +184,8 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 			else {
 				triangle[2].position = intersection(insight, point.second, observer);
 				visibilityPolygon.append(triangle);
+				if (whichside(visibilityPolygon.begin(), insight) == 0)
+					visibilityPolygon.tieUpTheEnds(observer);
 				break;
 				insight = *intersectingSegments.begin();
 				intersectingSegments.clear();
@@ -179,6 +197,8 @@ void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& a
 
 	}
 
+
+	//
 
 }
 
