@@ -21,6 +21,7 @@ private:
 	vector<Segment> linesegments;
 	vector<std::pair<int, Point> > allpoints;
 	void mapreader(const std::string& mapfile);
+	void mapreader2(const std::string& mapfie);
 	void append(const sf::Vertex* line);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

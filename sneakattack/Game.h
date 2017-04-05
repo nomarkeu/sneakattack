@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Character.h"
-
+#include "tilemap.h"
 
 
 
@@ -15,7 +15,7 @@ private:
 	enum class State { running, spotted, killed };
 	State gameState;
 	sf::Texture texture;
-	sf::Sprite background;
+	TileMap background;
 	sf::RenderWindow window;
 	std::map<key, bool> pressedKeys;
 
@@ -26,6 +26,7 @@ private:
 	Player player;
 	Enemy enemy;
 
+	void readTileMap();
 	bool thereIsInput();
 	void gameOver();
 	void input();

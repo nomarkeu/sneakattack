@@ -12,7 +12,7 @@ Enemy::Enemy(): Character(50.0), isAlive(true)
 	heading = 0.f;
 	targetHeading = 0.f;
 	attackRange = 25.0f;
-	sprite.setRadius(10.0f);
+//	sprite.setRadius(10.0f);
 	sf::FloatRect boundingBox = sprite.getLocalBounds();
 	sprite.setOrigin(boundingBox.width / 2.f, boundingBox.height / 2.f);
 	sprite.setFillColor(sf::Color::Red);

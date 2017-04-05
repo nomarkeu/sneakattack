@@ -10,11 +10,11 @@
 	 sf::Time dt = clock.restart();
 	 float dtAsSeconds = dt.asSeconds();
 
-	 if (thereIsInput()) {
-		 player.move(pressedKeys, dtAsSeconds);
+	// if (thereIsInput()) {
+		 player.move(pressedKeys, dtAsSeconds, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
 		// std::streamsize prec = std::cout.precision();
-		 //std::cout << std::setprecision(8) <<player.getLocation().x << "," << player.getLocation().y << std::endl << "------" << std::setprecision(prec) << std::endl;
-	 }
+		// std::cout << std::setprecision(8) <<player.getLocation().x << "," << player.getLocation().y << std::endl << "------" << std::setprecision(prec) << std::endl;
+	// }
 	 
 
 	// if (pressedKeys[key::leftClick])
@@ -25,5 +25,5 @@
 	//	 gameState = State::spotted;
 
 
-	 enemy.move(dtAsSeconds);
+	// enemy.move(dtAsSeconds);
 }

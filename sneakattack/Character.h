@@ -4,19 +4,20 @@
 #include "visibilitypolygon.h"
 //#include "visibility.h"
 #include "RectangleMap.h"
+#include <unordered_set>
 
 
 
 
 class Character {
 public:
-	virtual const sf::CircleShape& getSprite() const { return sprite; }
+	 const sf::RectangleShape& getSprite() const { return sprite; }
 	Character(float s) : speed(s) {}
 	
 protected:
 	Point location;
 	sf::Texture texture;
-	sf::CircleShape sprite;
+	sf::RectangleShape sprite;
 	float speed;
 	float heading;
 	//Visuals visuals;
@@ -25,8 +26,6 @@ protected:
 	void move();
 	const Point& getLocation() const { return location; }
 	void update() { sprite.setPosition(Point(location.x, location.y)); }
-
-
 };
 
 
@@ -75,16 +74,25 @@ class Player : public Character {
 	
 public:
 	Player();
-	void move( std::map<key, bool>&, const float&);
+	void move( std::map<key, bool>&, const float&, const Point&);
 	const bool& attack(Enemy& enemy) const { return enemy.defend(this->getLocation()); }
 	const Point& getLocation() const { return location; }
 	const Triangles& getVisibilityPolygon() const { return visibilityPolygon; }
 private:
-	void update();
-	void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints);
 	float runSpeed;
 	Triangles visibilityPolygon;
-	 RectangleMap Map;
+	RectangleMap Map;
+	std::array<int, 9> gridTiles;
+	int wallTilecount;
+	std::vector<int> level;
+	mutable std::vector<int> wallTilesNearby;
+
+	void updategridTiles();
+	void update();
+	void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints);
+	bool potentialCollision() const;
+	void collide() ;
+	
 };
 
 
