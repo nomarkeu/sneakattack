@@ -21,9 +21,9 @@
 		 //if (player.attack(enemy))
 			// gameState = State::killed;
 	 
-	// if (enemy.sense(player.getLocation()))
-	//	 gameState = State::spotted;
+	 if (enemy.sense(player.getLocation()))
+		 gameState = State::spotted;
 
 
-	// enemy.move(dtAsSeconds);
+	 enemy.move(dtAsSeconds);
 }

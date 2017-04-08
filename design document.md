@@ -88,3 +88,17 @@ do wall collision
 
 
 ------------------------
+wall tiles - 1-14
+
+
+
+-- enemy visibility obstacles
+
+----------------------------------
+Effective C++
+- always use explicit constructors unless explicitly necessary
+- generally bad idea to pass user defined types by value - use pass by reference to const
+- make class specific contants static
+- in-class initialisation is only allowed for integral types and only for constants
+- conceptual constness?
+- 

@@ -4,15 +4,18 @@
 #include <fstream>
 #include <exception>
 #include <iostream>
+#include "utilities.h"
 
-Enemy::Enemy(): Character(50.0), isAlive(true)
+Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile")
 {
+
+
 	turning = false;
 	turningSpeed = 90.f; //degrees per second;
 	heading = 0.f;
 	targetHeading = 0.f;
 	attackRange = 25.0f;
-//	sprite.setRadius(10.0f);
+	sprite.setSize(Point(10, 10));
 	sf::FloatRect boundingBox = sprite.getLocalBounds();
 	sprite.setOrigin(boundingBox.width / 2.f, boundingBox.height / 2.f);
 	sprite.setFillColor(sf::Color::Red);
@@ -100,6 +103,7 @@ void Enemy::update()
 
 bool Enemy::sense(const Point& player)
 {
+
 	Point a = viewcone.getPoint(0);
 	Point b = viewcone.getPoint(1);
 	Point c = viewcone.getPoint(2);
@@ -107,7 +111,7 @@ bool Enemy::sense(const Point& player)
 	a=tr.transformPoint(a);
 	b = tr.transformPoint(b);
 	c = tr.transformPoint(c);
-	return pointInTriangle(player,a,b,c);
+	return pointInTriangle(player, a, b, c) && lineOfSight(player);
 }
 
 void Enemy::turn(const float& elapsedTime)
@@ -118,3 +122,17 @@ void Enemy::turn(const float& elapsedTime)
 		turning = false;
 	}
 }
+
+bool Enemy::lineOfSight(const Point& player)
+{
+	Segment los{ location,player };
+
+	for (const auto& segment : Map.getLineSegments())
+		if (whichside(segment[0], los) != whichside(segment[1], los))
+			if(whichside(player,segment) != whichside(location,segment))
+				return false;
+
+	return true;
+}
+
+

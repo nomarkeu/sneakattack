@@ -49,6 +49,8 @@ private:
 	int turnDirection;
 	std::vector<Point> enemy_path;
 	sf::ConvexShape viewcone;
+	RectangleMap Map;
+
 
 	// pointAhead is always in range [enemy_path.begin(),enemy_path.end())
 	// before and after every member function call
@@ -63,6 +65,8 @@ private:
 		return utility::findDistance(location, *pointAhead);
 	}
 
+
+	bool lineOfSight(const Point& player);
 	
 	void update();
 };
@@ -73,14 +77,20 @@ private:
 class Player : public Character {
 	
 public:
-	Player();
+	
+	Player(sf::RenderTexture& rendertexture);
+
 	void move( std::map<key, bool>&, const float&, const Point&);
 	const bool& attack(Enemy& enemy) const { return enemy.defend(this->getLocation()); }
 	const Point& getLocation() const { return location; }
 	const Triangles& getVisibilityPolygon() const { return visibilityPolygon; }
+
 private:
-	float runSpeed;
+
+	Player();
+
 	Triangles visibilityPolygon;
+	float runSpeed;
 	RectangleMap Map;
 	std::array<int, 9> gridTiles;
 	int wallTilecount;

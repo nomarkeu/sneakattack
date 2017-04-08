@@ -4,7 +4,7 @@
 #include "tilemap.h"
 
 
-
+enum class ActionState { NONE, PANNING };
 
 class Game {
 public:
@@ -13,11 +13,17 @@ public:
 	
 private:
 	enum class State { running, spotted, killed };
+	ActionState actionState;
 	State gameState;
-	sf::Texture texture;
+	//sf::Texture texture;
 	TileMap background;
+	TileMap foreground;
 	sf::RenderWindow window;
+	sf::RenderTexture renderTexture;
 	std::map<key, bool> pressedKeys;
+	sf::View gameView;
+	float zoomLevel;
+	sf::Vector2i panningAnchor;
 
 
 	RectangleMap Map;
@@ -32,4 +38,5 @@ private:
 	void input();
 	void update(sf::Clock&);
 	void draw();
+	void viewPortManager(sf::Event&);
 };

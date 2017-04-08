@@ -4,16 +4,29 @@
 void Game::draw()
 {
 	window.clear(sf::Color::White);
-	//window.draw(background);
+	window.draw(background);
 	
+	renderTexture.clear();
+
+	renderTexture.draw(foreground);
+	renderTexture.draw(enemy.getViewcone());
+	renderTexture.draw(enemy.getSprite());
 	
-	
-	//window.draw(enemy.getSprite());
-	//window.draw(enemy.getViewcone());
+	renderTexture.display();
+
+
 	window.draw(player.getVisibilityPolygon());
-	window.draw(Map);
+
+	//::Sprite stuff(renderTexture.getTexture());
+
+	//ndow.draw(stuff);
+
+
+//	window.draw(Map);
 	window.draw(player.getSprite());
+
+	//window.draw(enemy.getSprite());
 
 
 	window.display();
-}
+}	

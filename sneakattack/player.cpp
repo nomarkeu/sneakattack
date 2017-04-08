@@ -8,7 +8,7 @@
 
 
 
-Player::Player() : Character(50.0f), runSpeed(2*speed), Map("mapfile"), wallTilecount(15)
+Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertexture), Character(50.0f), runSpeed(2*speed), Map("mapfile"), wallTilecount(15)
 {
 	
 	
