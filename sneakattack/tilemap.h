@@ -61,7 +61,7 @@ private:
 	{
 		// apply the transform
 		states.transform *= getTransform();
-
+			
 		// apply the tileset texture
 		states.texture = &m_tileset;
 

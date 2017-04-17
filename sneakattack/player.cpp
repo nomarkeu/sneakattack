@@ -5,10 +5,11 @@
 #include <exception>
 #include <map>
 #include "SATCollision.h"
+#include "visibility.h"
 
 
 
-Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertexture), Character(50.0f), runSpeed(2*speed), Map("mapfile"), wallTilecount(15)
+Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertexture.getTexture()), Character(50.0f), runSpeed(2*speed), Map("mapfile"), wallTilecount(15)
 {
 	
 	
@@ -109,7 +110,7 @@ void Player::update()
 {
 	sprite.setPosition(Point(int(location.x), int(location.y)));
 	visibilityPolygon.clear();
-	visibility( Map.getLineSegments(), Map.getAllPoints());
+	visibility( Map.getLineSegments(), Map.getAllPoints(),location, visibilityPolygon);
 	visibilityPolygon.setTexture();
 }
 

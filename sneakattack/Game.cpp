@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "Game.h"
 #include <iostream>
+#include "lightmap.h"
 
 Game::Game() : gameState(State::running), Map("mapfile"), actionState(ActionState::NONE), zoomLevel(1.5f), player(renderTexture)
 {
 	//map.setMap("map");
 
-
+	light::init(&Map);
+	gameView.setSize(Point(1280, 960));
 	renderTexture.create(1280, 960);
 
 	readTileMap();
@@ -191,13 +193,13 @@ void Game::viewPortManager(sf::Event& event)
 	{
 		if (event.mouseWheel.delta < 0)
 		{
-			gameView.zoom(2.0f);
-			zoomLevel *= 2.0f;
+			gameView.zoom(1.2f);
+			zoomLevel *= 1.2f;
 		}
 		else
 		{
-			gameView.zoom(0.5f);
-			zoomLevel *= 0.5f;
+			gameView.zoom(.83333f);
+			zoomLevel *= .83333f;
 		}
 		break;
 	}
@@ -208,4 +210,7 @@ void Game::viewPortManager(sf::Event& event)
 
 
 	window.setView(gameView);
+
+	
+
 }

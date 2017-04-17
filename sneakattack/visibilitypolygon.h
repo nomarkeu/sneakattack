@@ -28,11 +28,11 @@ public:
 			triangles.append(triangle[i]);
 	}
 	
-	Triangles(sf::RenderTexture& rendertexture) {
+	Triangles(const sf::Texture& rendertexture) : texture(rendertexture) {
 		triangles.setPrimitiveType(sf::Triangles);
 		//if (!texture.loadFromFile("visibility.png"))
 			//throw std::runtime_error("Couldn't load visibility file");
-		texture = &rendertexture;
+		//texture = rendertexture;
 	}
 
 	void setTexture()
@@ -44,12 +44,26 @@ public:
 
 	}
 
+
+	void setLightTexture(int x, int y)
+	{
+		int size = triangles.getVertexCount();
+		for (int i = 0; i < size; i++) {
+			triangles[i].texCoords = triangles[i].position + Point(640-x,480-y);
+		}
+	}
+
 	
+	const size_t getVertexCount() const { return triangles.getVertexCount(); }
+
+
+	const sf::Vertex& operator[](size_t index) const { return triangles[index]; }	
+
 private:
-	Triangles() {};
+	//Triangles();
 
 	void operator=(Triangles&) {};
-	Triangles(Triangles&) {};
+	//Triangles(Triangles&);
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
@@ -57,7 +71,7 @@ private:
 		states.transform *= getTransform();
 
 		// apply the tileset texture
-		states.texture = &texture->getTexture();
+		states.texture = &texture;
 
 		// draw the vertex array
 		target.draw(triangles, states);
@@ -66,6 +80,6 @@ private:
 	}
 
 	sf::VertexArray triangles;
-	const sf::RenderTexture* texture;
+	const sf::Texture& texture;
 	
 };

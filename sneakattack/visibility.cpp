@@ -6,6 +6,7 @@
 #include <limits>
 #include <set>
 #include "Character.h"
+#include "visibility.h"
 
 int Round(float x) {
 	assert(x >= LONG_MIN - 0.5);
@@ -18,7 +19,7 @@ int Round(float x) {
 // implement collinear check
 
 //void visibility(Triangles& visibilityPolygon,const Point& observer, const vector<Segment>& linesegments, const vector<Pointmap>& allpoints)
-void Player::visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints)
+void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints, const Point& location, Triangles& visibilityPolygon)
 {
 	//sort(linesegments.begin(), linesegments.end());
 	

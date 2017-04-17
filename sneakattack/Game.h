@@ -4,6 +4,7 @@
 #include "tilemap.h"
 
 
+
 enum class ActionState { NONE, PANNING };
 
 class Game {

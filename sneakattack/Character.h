@@ -99,7 +99,7 @@ private:
 
 	void updategridTiles();
 	void update();
-	void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints);
+	//void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints);
 	bool potentialCollision() const;
 	void collide() ;
 	

@@ -155,7 +155,6 @@ private:
 
 };
 
-
 inline Point intersection(const Segment& segment, const Point& point, const Point& observer)
 {   
 	float dx = observer.x - point.x;
@@ -198,7 +197,6 @@ inline Point intersection(const Segment& segment, const Point& point, const Poin
 	
 
 }
-
 
 inline bool intersecting(const Segment& segment, const Point& point, const Point& observer)
 {
@@ -245,7 +243,6 @@ inline bool isrightturn(const Point& a, const Point& b, const Point& c)
 
 	return false;
 }
-
 
 inline bool coincidentLeftTurn(const Segment& segment,const Point& point, const Point& observer)
 {
