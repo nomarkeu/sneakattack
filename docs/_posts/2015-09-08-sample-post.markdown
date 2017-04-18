@@ -1,62 +1,22 @@
 ---
 layout: post
-title:  "Sample post from Daktilo"
+title:  "Making a stealth game engine!"
 subtitle: "What you can do with it!"
 date:   2014-08-19 23:56:45
 categories: [tool]
 ---
 
-Just a sample post to show some of the *typography* elements supported from
-**daktilo** theme.
+I love stealth games. Hitman: Silent Assassin would be my favourite in that genre. This engine is inspired by Mark of the Ninja, Hitman SA and the Thief series. I really like the inclusion of both auditory and visual cues in the Thief series, and also how something similar is done in MOTN. I'm imagining a game based on this engine to look like a Hitman game in topdown view and play like a hybrid of thief and mark of the ninja.
 
-___
-
-A blockquote:
-
-> We are Hitchhikers in the road of open source knowledge.
-
-## Header 2
-
-Duis lacinia commodo dui, vel aliquam metus hendrerit eu. Integer et scelerisque dui. Sed nec molestie quam. Donec sit amet nisl a massa commodo ultrices nec quis nunc. Aenean aliquet eu arcu adipiscing dignissim. Nunc dictum elit vitae dolor molestie aliquet.
+Oh and I'm writing this in C++. I decided to use Visual Studio after trying out Code::Blocks and CodeLite for and IDE. 
+And after some looking around I decided to use SFML as a media library. SFML is a nice object oriented C++ wrapper for OpenGL. 
 
 
-Example code:
-
-{% highlight javascript %}
-var light = new Light();
-var switchUp = new FlipUpCommand(light);
-var switchDown = new FlipDownCommand(light);
-var s = new Switch();
-
-s.storeAndExecute(switchUp);
-s.storeAndExecute(switchDown);
-{% endhighlight %}
 
 
-A list:
 
-- Praesent nisi elit, bibendum ut consectetur ac, aliquet in nunc
-- Donec ante est, volutpat in mi et, pulvinar congue dolor.
-- Quisque ultrices pulvinar sollicitudin.
-- Duis elementum odio eu euismod suscipit.
-- Integer enim lorem, interdum sit amet consectetur non, bibendum eget neque.
+The first major hurdle was implementing a way to restrict visibility to what can be seen from the player's position. Here's the result.
 
-A numbered list:
+![Realitime visibility](http://i.imgur.com/KD28NNo.gif)
 
-1. Praesent nisi elit, bibendum ut consectetur ac, aliquet in nunc.
-2. Donec ante est, volutpat in mi et, pulvinar congue dolor.
-3. Quisque ultrices pulvinar sollicitudin.
-4. Duis elementum odio eu euismod suscipit.
-5. Integer enim lorem, interdum sit amet consectetur non, bibendum eget neque.
-
-Definition list:
-
-Curabitur cursus magna eu sem cursus
-: ac ultrices urna pharetra.
-: Duis scelerisque ipsum eu luctus elementum.
-
-Pellentesque habitant morbi tristique senectus
-: Curabitur malesuada lacus ac gravida porttitor
-: Duis sodales feugiat lorem et mollis.
-
-Want to suggest something? Please [Send me a request](https://github.com/kronik3r/daktilo/issues/new).
+It took some time to fix the bugs. But it works nicely as long as all lines are connected as polygons. Dangling line segments don't work. But that is OK because in the end the map can me constructed using strictly polygons.
