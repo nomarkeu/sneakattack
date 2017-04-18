@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Making a stealth game engine!"
-subtitle: "What you can do with it!"
-date:   2014-08-19 23:56:45
+subtitle: "Who goes there?!"
+date:   2017-02-09 23:56:45
 categories: [tool]
 ---
 
