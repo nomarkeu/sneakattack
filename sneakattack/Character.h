@@ -7,8 +7,6 @@
 #include <unordered_set>
 
 
-
-
 class Character {
 public:
 	 const sf::RectangleShape& getSprite() const { return sprite; }
@@ -20,8 +18,6 @@ protected:
 	sf::RectangleShape sprite;
 	float speed;
 	float heading;
-	//Visuals visuals;
-
 
 	void move();
 	const Point& getLocation() const { return location; }
@@ -99,12 +95,7 @@ private:
 
 	void updategridTiles();
 	void update();
-	//void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints);
 	bool potentialCollision() const;
 	void collide() ;
 	
 };
-
-
-
-//void visibility(Player& player, const vector<Segment>& linesegments, vector<Pointmap>& allpoints);

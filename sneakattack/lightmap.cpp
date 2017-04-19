@@ -10,7 +10,8 @@ namespace light
 	 std::vector<sf::Vertex> lightMap(19481); // old 40 30 
 	 sf::VertexArray lightTiles(sf::Quads,76800); // 160 120
 	  RectangleMap*  Map;
-	  Triangles lightPolygon;	
+	  sf::Texture texture;
+	  Triangles lightPolygon(texture);
 
 	 void init( RectangleMap* const map_) {		
 		

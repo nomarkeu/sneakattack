@@ -16,77 +16,20 @@ int Round(float x) {
 	return (int)(x - 0.5);
 }
 
-// implement collinear check
-
-//void visibility(Triangles& visibilityPolygon,const Point& observer, const vector<Segment>& linesegments, const vector<Pointmap>& allpoints)
 void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints, const Point& location, Triangles& visibilityPolygon)
 {
-	//sort(linesegments.begin(), linesegments.end());
-	
 	const Point& observer = location;
-	//observer.x = Round(location.x);
-	//observer.y=Round(location.y);
-
 	AngleComparator compare(observer);
-
-	//vector<Segment> linesegments;
-	//vector<Pointmap> allpoints;
-	//mapreader(linesegments, allpoints);
-
-	/*for (auto point : allpoints) {
-		std::cout << point.first<<": "<<point.second.x << ", " << point.second.y << std::endl;
-	}
-	std::cout << "-----------" << std::endl;
-	getchar();
-	
-
-	for (auto a : allpoints)
-		for (auto b : allpoints)
-			std::cout << compare(a, b)<<std::endl;
-	getchar();*/
-
 	
 	sort(allpoints.begin(), allpoints.end(), compare);
-	
-	
-
-	//vector<Pointmap>::iterator one = allpoints.begin() + 4;
-	//vector<Pointmap>::iterator  two = allpoints.begin() + 8;
-	
-	//vector<Pointmap> temp(one,two);
-
-	//allpoints[4] = std::pair<int,Point>(12, {1209.00000 ,105.000000 });
-	//allpoints[5] = std::pair<int, Point>(10, {696.000000 ,392.000000 });
-	//allpoints[6] = std::pair<int, Point>(11, {336.000000 ,392.000000 });
-	//allpoints[7] = std::pair<int, Point>(3, {11.0000000 ,676.000000 });
-	//allpoints;
-	//
-	
-	/*for (auto point : allpoints) {
-		std::cout << point.first << ": "<<point.second.x << ", " << point.second.y << std::endl;
-	}
-	
-	getchar();*/
 
 	sf::VertexArray visibleTriangle(sf::Triangles, 3);
 	sf::Vertex* triangle = &visibleTriangle[0];
-
-	
-		
 	triangle[0].position = observer;
-//	triangle[0].color = triangle[1].color = triangle[2].color = sf::Color(151,204,239,100);
-
 	lineSegmentCompare segCompare(observer);
-
-	//std::set<Segment, lineSegmentCompare> intersectingSegments{segCompare};
 	vector<Segment> intersectingSegments;
-
 	Segment insight;
-
 	bool first = true;
-
-	//bool fixtriangle = false;
-
 	for (const auto& point : allpoints) {
 		
 		if (first) {
@@ -108,8 +51,6 @@ void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints
 			for (const auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer) && !approx_equal(segment,insight) && !coincidentLeftTurn(segment,point.second,observer))
 					intersectingSegments.push_back(segment);
-		//	intersectingSegments;
-			//intersectingSegments.erase(insight);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 				insight = *intersectingSegments.begin();
 			intersectingSegments.clear();
@@ -120,7 +61,6 @@ void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints
 			for (const auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer))
 					intersectingSegments.push_back(segment);
-			//intersectingSegments.push_back(insight);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 			if (approx_equal(insight, *intersectingSegments.begin())) {
 				intersectingSegments.clear();
@@ -136,23 +76,7 @@ void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints
 			}
 		}
 	}
-
 	//after last point
-
-	/*auto& point = allpoints[0];
-	if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
-		triangle[2].position = point.second;
-		;
-	}
-	else {
-		for (auto& segment : linesegments)
-			if (intersecting(segment, point.second, observer))
-				intersectingSegments.insert(segment);
-			triangle[2].position = intersection(insight, point.second, observer);
-			visibilityPolygon.append(triangle);
-		}
-	*/
-
 	for (auto& point : allpoints) {
 			if (approx_equal(point.second, insight[0]) || approx_equal(point.second, insight[1])) {
 			triangle[2].position = point.second;
@@ -164,8 +88,6 @@ void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints
 			for (auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer) && !approx_equal(segment, insight))
 					intersectingSegments.push_back(segment);
-			//	intersectingSegments;
-			//intersectingSegments.erase(insight);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 			insight = *intersectingSegments.begin();
 			intersectingSegments.clear();
@@ -176,7 +98,6 @@ void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints
 			for (auto& segment : linesegments)
 				if (intersecting(segment, point.second, observer))
 					intersectingSegments.push_back(segment);
-			//intersectingSegments.push_back(insight);
 			std::sort(intersectingSegments.begin(), intersectingSegments.end(), segCompare);
 			if (approx_equal(insight, *intersectingSegments.begin())) {
 				intersectingSegments.clear();
@@ -194,13 +115,7 @@ void visibility(const vector<Segment>& linesegments, vector<Pointmap>& allpoints
 				;
 			}
 		}
-
-
 	}
-
-
-	//
-
 }
 
 

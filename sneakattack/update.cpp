@@ -15,7 +15,7 @@
 		// std::streamsize prec = std::cout.precision();
 		// std::cout << std::setprecision(8) <<player.getLocation().x << "," << player.getLocation().y << std::endl << "------" << std::setprecision(prec) << std::endl;
 	// }
-	 
+ 
 
 	// if (pressedKeys[key::leftClick])
 		 //if (player.attack(enemy))

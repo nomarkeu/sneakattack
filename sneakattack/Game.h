@@ -4,7 +4,6 @@
 #include "tilemap.h"
 
 
-
 enum class ActionState { NONE, PANNING };
 
 class Game {
@@ -25,11 +24,8 @@ private:
 	sf::View gameView;
 	float zoomLevel;
 	sf::Vector2i panningAnchor;
-
-
 	RectangleMap Map;
-
-
+	
 	Player player;
 	Enemy enemy;
 
