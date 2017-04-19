@@ -51,9 +51,7 @@ inline int whichside2(const Point p, const Segment& s)
 }
 
 struct AngleComparator
-{
-	
-	
+{		
 	AngleComparator(const Point& p) : player(p) {}
 	bool operator()(const Pointmap& p1, const Pointmap& p2) const
 	{
@@ -62,8 +60,6 @@ struct AngleComparator
 		if (angle > 0.0f) return true;
 		else 
 			return false;
-		//return p1.second.x < p2.second.x;
-		//return angle;
 	}
 
 private:
@@ -72,30 +68,20 @@ private:
 	{
 		Vector ab = { b.x - a.x, b.y - a.y };
 		Vector cb = { b.x - c.x, b.y - c.y };
-
 		float dot = (ab.x * b.x + ab.y * b.y); // dot product
 		float cross = (ab.x * b.y - ab.y * b.x); // cross product
-
 		float alpha1 = atan2(cross, dot);
 		alpha1 = alpha1 < 0.0f ? 2.0f * pi + alpha1 : alpha1;
-
-
-		 dot = (b.x * cb.x + b.y * cb.y); // dot product
-		 cross = ( b.y * cb.x - b.x * cb.y); // cross product
-
+		dot = (b.x * cb.x + b.y * cb.y); // dot product
+		cross = ( b.y * cb.x - b.x * cb.y); // cross product
 		float alpha2 = atan2(cross, dot);
 		alpha2 = alpha2 < 0.0f ? 2.0f * pi + alpha2 : alpha2;
-
 		return ((alpha1-alpha2) * 180.0f / pi)*100.0f;
 	};
-
-
 };
 
 struct lineSegmentCompare
-{
-	
-
+{	
 	lineSegmentCompare(const Point& p) : player(p) {}
 
 	bool operator()(const Segment& s1, const Segment& s2) const
@@ -151,8 +137,6 @@ struct lineSegmentCompare
 
 private:
 	Point player;
-
-
 };
 
 inline Point intersection(const Segment& segment, const Point& point, const Point& observer)
@@ -246,18 +230,13 @@ inline bool isrightturn(const Point& a, const Point& b, const Point& c)
 
 inline bool coincidentLeftTurn(const Segment& segment,const Point& point, const Point& observer)
 {
-	
 	if ((approx_equal(point, segment[0]))) {
 		return !isrightturn(point, observer, segment[1]);
-			
 	}
 	else if ((approx_equal(point, segment[1])))
 	{
 		return !isrightturn(point, observer, segment[0]);
 	}
-		
-
+	
 	return false;
-
-
 }

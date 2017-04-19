@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SATCollision.h"
 #include <array>
-#include <assert.h>
+//#include <assert.h>
 
 bool SATCollision(std::array<Point,4> R1, std::array<Point,4> R2, Vector& projectionVector) {
 
@@ -14,9 +14,6 @@ bool SATCollision(std::array<Point,4> R1, std::array<Point,4> R2, Vector& projec
 
 	float R1min=100000.f, R1max=0.f, R2min=100000.f, R2max=0.f, projection = 0,overlap=0, minOverlap = 100000.f;
 	float axismagnitude = 0;
-
-
-
 	Vector minaxis;
 
 	for (auto& axis : axes) {
@@ -56,9 +53,7 @@ bool SATCollision(std::array<Point,4> R1, std::array<Point,4> R2, Vector& projec
 	}
 
 	R1centre = Point((xmax + xmin)/2.0f, (ymax + ymin)/2.0f);
-
 	xmax = 0.f; xmin = 10000.f; ymax = 0.f; ymin = 10000.f;
-
 	for (auto& point : R2) {
 		xmax = std::max(xmax, point.x);
 		xmin = std::min(xmin, point.x);
@@ -67,12 +62,10 @@ bool SATCollision(std::array<Point,4> R1, std::array<Point,4> R2, Vector& projec
 	}
 
 	R2centre = Point((xmax + xmin) / 2.0f, (ymax + ymin) / 2.0f);
-
 	Vector towardsR2 = R2centre - R1centre;
 
 	if ((towardsR2.x*projectionVector.x + towardsR2.y*projectionVector.y) < 0)
 		projectionVector = projectionVector*-1.0f;
 //	assert(projectionVector.y < 0.00000001f);
-
 	return true;
 }

@@ -5,45 +5,32 @@
 class Triangles : public sf::Drawable, public sf::Transformable
 {
 public:
-	
+	Triangles(const sf::Texture& rendertexture) : texture(rendertexture)
+	{
+		triangles.setPrimitiveType(sf::Triangles);
+	}
+
 	void tieUpTheEnds(const Point& observer)
 	{
 		if (isrightturn(triangles[1].position, observer, triangles[triangles.getVertexCount() - 1].position))
 			triangles[triangles.getVertexCount()-1] = triangles[1];
 	}
 
-	const Point begin() const
-	{
-		return triangles[1].position;
-	}
-
-	void clear()
-	{
-		triangles.clear();
-	}
-
+	const Point begin() const {	return triangles[1].position; }
+	void clear() { triangles.clear(); }
 	void append(const sf::Vertex* triangle)
 	{
 		for(int i=0;i!=3;i++)
 			triangles.append(triangle[i]);
 	}
 	
-	Triangles(const sf::Texture& rendertexture) : texture(rendertexture) {
-		triangles.setPrimitiveType(sf::Triangles);
-		//if (!texture.loadFromFile("visibility.png"))
-			//throw std::runtime_error("Couldn't load visibility file");
-		//texture = rendertexture;
-	}
-
 	void setTexture()
 	{
 		int size = triangles.getVertexCount();
 		for (int i = 0; i < size; i++) {
 			triangles[i].texCoords = triangles[i].position;
 		}
-
 	}
-
 
 	void setLightTexture(int x, int y)
 	{
@@ -53,18 +40,12 @@ public:
 		}
 	}
 
-	
 	const size_t getVertexCount() const { return triangles.getVertexCount(); }
-
-
 	const sf::Vertex& operator[](size_t index) const { return triangles[index]; }	
 
 private:
-	//Triangles();
-
-	void operator=(Triangles&) {};
-	//Triangles(Triangles&);
-
+	void operator=(Triangles&) {}; // no assignment allowed
+	
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		// apply the transform
@@ -81,5 +62,4 @@ private:
 
 	sf::VertexArray triangles;
 	const sf::Texture& texture;
-	
 };

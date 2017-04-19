@@ -9,9 +9,6 @@ void Game::input()
 		return;
 	}
 
-
-
-
 	// Handle the player moving
 	pressedKeys[key::W] = sf::Keyboard::isKeyPressed(sf::Keyboard::W) ? true : false;
 	pressedKeys[key::S] = sf::Keyboard::isKeyPressed(sf::Keyboard::S) ? true : false;

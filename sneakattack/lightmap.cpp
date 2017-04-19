@@ -9,44 +9,25 @@ namespace light
 {
 	 std::vector<sf::Vertex> lightMap(19481); // old 40 30 
 	 sf::VertexArray lightTiles(sf::Quads,76800); // 160 120
-	// std::map<Pointi, bool> lights;
 	  RectangleMap*  Map;
-	  sf::Texture lightTexture;
-	  Triangles lightPolygon(lightTexture);
-	 vector<Triangles> lightPolygons;// (10, Triangles(lightTexture));
-	 sf::BlendMode additiveBlending = sf::BlendAdd;
+	  Triangles lightPolygon;	
 
-
-
-	 void init( RectangleMap* const map_) {
+	 void init( RectangleMap* const map_) {		
 		
-
-		 lightTexture.loadFromFile("lightmap.png");
-	
 		 Map = map_;
-
-		int vertexcount = 0;// static_cast<int>(lightMap.size());
+		int vertexcount = 0;
 
 		for (auto& vertex : lightMap) {
 			vertex.color = sf::Color::Black;
-			vertex.color.a = 200;
-		
+			vertex.color.a = 200;		
 			vertex.position.x = (vertexcount % 161) * 8;
 			vertex.position.y = (vertexcount / 161) * 8;
 			vertexcount++;
 		}
-		
-	//	lightMap[100].color.a = 0;
-
-		//int mCount = static_cast<int>(lightMap.size());
-		
-
+	
 		turnOn(Pointi(600, 33));
 		turnOn(Pointi(500, 450));
-		updateTiles();
-
-		
-		
+		updateTiles();	
 	}
 
 
@@ -70,35 +51,24 @@ namespace light
 
 			 p1 = lightPolygon[count + 1].position;
 			 p2 = lightPolygon[count + 2].position;
-
-			 xmax = std::max(std::max(p0.x, p1.x), p2.x);
+			 /*xmax = std::max(std::max(p0.x, p1.x), p2.x);
 			 xmin = std::min(std::min(p0.x, p1.x), p2.x);
 			 ymax = std::max(std::max(p0.y, p1.y), p2.y);
-			 ymin = std::min(std::min(p0.y, p1.y), p2.y);
-
+			 ymin = std::min(std::min(p0.y, p1.y), p2.y);*/
 			 for (auto& vertex : lightMap)
 				 if (pointInTriangle(vertex.position, p0, p1, p2)) {
 					// alpha = std::min(50.f,300.f/ ((pow((vertex.position - p0).x/128.f, 2.f) + pow((vertex.position - p0).y/128.f, 2.f))));
 					 distance = sqrt( pow((vertex.position - p0).x, 2.f) + pow((vertex.position - p0).y, 2.f));
-
 					 if (distance < 200.f)
-						 vertex.color.a = 0;
-
-					 
-				 }
-
-			 
-
+						 vertex.color.a = 0;					 
+				 }			 
+			/*
 			  xmax = 0;
 			  xmin = std::numeric_limits<float>::max();
 			  ymax = 0;
 			  ymin = xmin;
-
-		 }
-
-		 //lightPolygon.setLightTexture(light.x,light.y);
-		 //lightPolygons.push_back(lightPolygon);
-		 
+			  */
+		 }	
 	 }
 
 	 void updateTiles()

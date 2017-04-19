@@ -5,8 +5,6 @@
 
 Game::Game() : gameState(State::running), Map("mapfile"), actionState(ActionState::NONE), zoomLevel(1.5f), player(renderTexture)
 {
-	//map.setMap("map");
-
 	light::init(&Map);
 	gameView.setSize(Point(1280, 960));
 	renderTexture.create(1280, 960);
@@ -16,10 +14,6 @@ Game::Game() : gameState(State::running), Map("mapfile"), actionState(ActionStat
 	Point resolution;
 	resolution.x = 1280;// sf::VideoMode::getDesktopMode().width;
 	resolution.y = 960;  sf::VideoMode::getDesktopMode().height;
-
-	
-	//view.zoom(.25f);
-	
 
 	window.create(sf::VideoMode(resolution.x, resolution.y),
 		"Sneak Attack");//,
@@ -50,20 +44,13 @@ void Game::start()
 	window.setView(view);
 
 	float zoom = 1.5f;
-
 	sf::Event event;
-
-
+	
 	while (window.isOpen())
 	{
-		// Restart the clock and save the elapsed time into dt
-	
 		window.pollEvent(event);
-
 		viewPortManager(event);
-
 		update(clock);
-
 		if (gameState == State::running)
 			draw();
 		else {
@@ -71,12 +58,10 @@ void Game::start()
 			return;
 		}
 	}
-
 }
 
 void Game::gameOver()
 {
-
 	if (gameState == State::killed) {
 		std::cout << " You won" << std::endl;
 		window.close();
@@ -85,7 +70,6 @@ void Game::gameOver()
 	std::cout << " You were spotted!" << std::endl;
 	window.close();
 	}
-
 }
 
 bool Game::thereIsInput()
@@ -95,10 +79,6 @@ bool Game::thereIsInput()
 
 void Game::readTileMap()
 {
-		// create the window
-		//sf::RenderWindow window(sf::VideoMode(640, 480), "Tilemap");
-
-
 		// define the level with an array of tile indices
 		const int level[] =
 		{
@@ -135,18 +115,11 @@ void Game::readTileMap()
 		};
 
 		// create the tilemap from the level definition
-	
 		if (!background.load("tileset.png", sf::Vector2u(32, 32), level, 40, 30))
 			throw std::runtime_error("couldn't load tileset.png");
-
-
-
+		
 		if (!foreground.load("visible.png", sf::Vector2u(32, 32), level, 40, 30))
 			throw std::runtime_error("couldn't load visible.png");
-
-		//background.scale(sf::Vector2f(.5f, .5f));
-
-
 }
 
 void Game::viewPortManager(sf::Event& event)
@@ -208,9 +181,6 @@ void Game::viewPortManager(sf::Event& event)
 		break;
 	}
 
-
 	window.setView(gameView);
-
-	
 
 }

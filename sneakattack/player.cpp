@@ -46,16 +46,14 @@ Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertextu
 
 	if (!texture.loadFromFile("player.png")) throw std::runtime_error("Could not load file player.png");
 	sprite.setSize(Point(18, 48));
-	
 	sprite.setTexture(&texture);
 	sprite.setTextureRect(sf::IntRect(9, 8, 18, 48));
-	//sprite.setRadius(25.0f);
 	sf::FloatRect boundingBox = sprite.getLocalBounds();
 	sprite.setOrigin(boundingBox.width / 2.f, boundingBox.height / 2.f);
 	location = Point(636.f, 153.f) ;
 	update();
 }
-//
+
 void Player::move(std::map<key, bool>&  pressedKeys,const float& dtAsSeconds, const Point& mousepoint)
 {
 	int vertical = pressedKeys[key::W] - pressedKeys[key::S];
@@ -78,32 +76,13 @@ void Player::move(std::map<key, bool>&  pressedKeys,const float& dtAsSeconds, co
 	float angledy = mousepoint.y - location.y;
 	float angledx = mousepoint.x - location.x;
 
-	//if(dx || dy) 
-
-//	float previousRotation = sprite.getRotation();
-
 	sprite.setRotation(180.0f*std::atan2(angledy, angledx)/3.14f);
 
-
 	updategridTiles();
-
 	update();
 
 	if (potentialCollision())
 		collide();
-
-
-//	sf::Transform transform = sprite.getTransform();
-	
-	
-
-	//std::cout << transform.transformPoint(sprite.getPoint(0)).x << std::endl;
-
-	//updategridTiles();
-
-	
-
-
 }
 
 void Player::update()
@@ -145,9 +124,7 @@ void Player::collide()
 {
 	float left, top;
 	Vector projectionVector;
-
 	std::array<Point, 4> wallRect, playerRect;
-
 	sf::Transform transform = sprite.getTransform();
 
 	for (int count = 0; count != 4; count++)
@@ -165,10 +142,7 @@ void Player::collide()
 		if (SATCollision(wallRect, playerRect, projectionVector))
 			location += projectionVector;
 		}
-
-
 	update();
-
 	}
 	
 	

@@ -7,7 +7,6 @@ typedef std::vector<sf::Sprite&> Visuals;
 namespace utility
 {
 	float findDistance(const Point&, const Point&);
-
 }
 
 enum class key { W, S, A, D, LShift, leftClick };

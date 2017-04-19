@@ -6,15 +6,10 @@
 #include <utility>
 #include "RectangleMap.h"	
 #include <unordered_set>
-//#include <string>
 
-
-
-//void Map::mapreader(vector<Segment>& linesegments, vector<Pointmap>& allpoints)
 RectangleMap::RectangleMap(const std::string& mapfile)
 {
 	mapreader2(mapfile);
-
 	lines.setPrimitiveType(sf::Lines);
 	for (const auto& linesegment : linesegments) {
 		sf::VertexArray mapLine(sf::Lines, 2);
@@ -28,9 +23,6 @@ RectangleMap::RectangleMap(const std::string& mapfile)
 
 void RectangleMap::mapreader(const std::string& mapfile)
 {
-	//vector<std::pair<int, Point> > allpoints;
-
-	
 	linesegments.clear();
 	std::ifstream Map_(mapfile);
 	if (Map_.is_open()) {
@@ -64,9 +56,7 @@ void RectangleMap::mapreader2(const std::string& mapfile)
 		return (size_t)(pt.second.x * 100 + pt.second.y);
 	};
 
-	//vector<std::pair<int, Point> > allpoints;
 	using Pointhash = std::unordered_set < Pointmap, decltype(hash), decltype(equal) >;
-
 	Pointhash allpoints_set(10,hash,equal);
 
 	linesegments.clear();
@@ -80,15 +70,10 @@ void RectangleMap::mapreader2(const std::string& mapfile)
 				Map_ >> points[1].x >> delimiter >> points[1].y >> delimiter;
 				segment = { points[0],points[1] };
 				linesegments.push_back(segment);
-				allpoints_set.insert(std::make_pair(totalPointCounter++, points[0]));
-				
-		
+				allpoints_set.insert(std::make_pair(totalPointCounter++, points[0]));		
 		}
 	}
-
-
 	std::copy(allpoints_set.begin(), allpoints_set.end(), std::back_inserter(allpoints));
-
 }
 
 void RectangleMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
