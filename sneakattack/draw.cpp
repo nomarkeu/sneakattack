@@ -10,8 +10,8 @@ void Game::draw()
 	renderTexture.clear();
 
 	renderTexture.draw(foreground);
-	//renderTexture.draw(enemy.getViewcone());
-	//renderTexture.draw(enemy.getSprite());
+	renderTexture.draw(enemy.getViewcone());
+	renderTexture.draw(enemy.getSprite());
 	renderTexture.draw(player.getSprite());
 	//renderTexture.draw(light::lightTiles);s
 	//for(auto& light : light::lightPolygons)

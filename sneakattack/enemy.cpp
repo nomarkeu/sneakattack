@@ -5,6 +5,7 @@
 #include <exception>
 #include <iostream>
 #include "utilities.h"
+#include "lightmap.h"
 
 Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile")
 {
@@ -111,7 +112,24 @@ bool Enemy::sense(const Point& player)
 	a=tr.transformPoint(a);
 	b = tr.transformPoint(b);
 	c = tr.transformPoint(c);
-	return pointInTriangle(player, a, b, c) && lineOfSight(player);
+
+	float lightOnPlayer;
+
+	int tilex = 0;
+	int tiley = 0;
+	tilex = player.x / 8.f;
+	tiley = player.y / 8.f;
+
+	int vertex = tilex*160 + tiley;
+
+	lightOnPlayer = light::lightTiles[vertex].color.a +
+						light::lightTiles[vertex+1].color.a +
+						light::lightTiles[vertex+2].color.a +
+						light::lightTiles[vertex+3].color.a;
+
+	lightOnPlayer /= 4.f;
+
+	return pointInTriangle(player, a, b, c) && lineOfSight(player) && (lightOnPlayer<100.f);
 }
 
 void Enemy::turn(const float& elapsedTime)

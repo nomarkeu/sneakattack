@@ -7,8 +7,8 @@
 
 namespace light
 {
-	 std::vector<sf::Vertex> lightMap(19481); // old 40 30 
-	 sf::VertexArray lightTiles(sf::Quads,76800); // 160 120
+	 std::vector<sf::Vertex> lightMap(1271);
+	 sf::VertexArray lightTiles(sf::Quads,4800);
 	// std::map<Pointi, bool> lights;
 	  RectangleMap*  Map;
 	  sf::Texture lightTexture;
@@ -31,8 +31,8 @@ namespace light
 			vertex.color = sf::Color::Black;
 			vertex.color.a = 200;
 		
-			vertex.position.x = (vertexcount % 161) * 8;
-			vertex.position.y = (vertexcount / 161) * 8;
+			vertex.position.x = (vertexcount % 41) * 32;
+			vertex.position.y = (vertexcount / 41) * 32;
 			vertexcount++;
 		}
 		
@@ -42,7 +42,7 @@ namespace light
 		
 
 		turnOn(Pointi(600, 33));
-		turnOn(Pointi(500, 450));
+		//turnOn(Pointi(600, 600));
 		updateTiles();
 
 		
@@ -60,7 +60,6 @@ namespace light
 		 float xmin = std::numeric_limits<float>::max();
 		 float ymax = 0;
 		 float ymin = xmin;
-		 float distance = 0;
 
 		 Point p0 = lightPolygon[0].position; // this point is always same for all triangles, ie the light's position
 		 Point p1, p2;
@@ -78,13 +77,8 @@ namespace light
 
 			 for (auto& vertex : lightMap)
 				 if (pointInTriangle(vertex.position, p0, p1, p2)) {
-					// alpha = std::min(50.f,300.f/ ((pow((vertex.position - p0).x/128.f, 2.f) + pow((vertex.position - p0).y/128.f, 2.f))));
-					 distance = sqrt( pow((vertex.position - p0).x, 2.f) + pow((vertex.position - p0).y, 2.f));
-
-					 if (distance < 200.f)
-						 vertex.color.a = 0;
-
-					 
+					 alpha = std::min(50.f,300.f/ ((pow((vertex.position - p0).x/128.f, 2.f) + pow((vertex.position - p0).y/128.f, 2.f))));
+					 vertex.color = sf::Color(244, 206, 66, alpha);
 				 }
 
 			 
@@ -106,10 +100,10 @@ namespace light
 		 int tCount = static_cast<int>(lightTiles.getVertexCount()) / 4;
 
 		 for (size_t count = 0; count != tCount; count++) {
-			 lightTiles[count * 4] = lightMap[count + count / 160];
-			 lightTiles[count * 4 + 1] = lightMap[count + count / 160 + 1];
-			 lightTiles[count * 4 + 2] = lightMap[count + count / 160 + 162];
-			 lightTiles[count * 4 + 3] = lightMap[count + count / 160 + 161];
+			 lightTiles[count * 4] = lightMap[count + count / 40];
+			 lightTiles[count * 4 + 1] = lightMap[count + count / 40 + 1];
+			 lightTiles[count * 4 + 2] = lightMap[count + count / 40 + 42];
+			 lightTiles[count * 4 + 3] = lightMap[count + count / 40 + 41];
 		 }
 	 }
 
