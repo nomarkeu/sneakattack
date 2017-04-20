@@ -113,23 +113,23 @@ bool Enemy::sense(const Point& player)
 	b = tr.transformPoint(b);
 	c = tr.transformPoint(c);
 
-	float lightOnPlayer;
+	float lightOnPlayer=std::numeric_limits<float>::max();
 
 	int tilex = 0;
 	int tiley = 0;
 	tilex = player.x / 8.f;
 	tiley = player.y / 8.f;
 
-	int vertex = tilex*160 + tiley;
+	int vertex = tilex + tiley*160;
 
-	lightOnPlayer = light::lightTiles[vertex].color.a +
-						light::lightTiles[vertex+1].color.a +
-						light::lightTiles[vertex+2].color.a +
-						light::lightTiles[vertex+3].color.a;
+	lightOnPlayer = light::lightTiles[vertex*4].color.a +
+						light::lightTiles[vertex*4+1].color.a +
+						light::lightTiles[vertex*4+2].color.a +
+						light::lightTiles[vertex*4+3].color.a;
 
 	lightOnPlayer /= 4.f;
 
-	return pointInTriangle(player, a, b, c) && lineOfSight(player) && (lightOnPlayer<100.f);
+	return pointInTriangle(player, a, b, c) && lineOfSight(player) && (lightOnPlayer < 55.f);
 }
 
 void Enemy::turn(const float& elapsedTime)
