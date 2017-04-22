@@ -7,7 +7,7 @@
 #include "utilities.h"
 #include "lightmap.h"
 
-Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile")
+Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile"), alertDelay(2.0f), alertDuration(0.f)
 {
 
 
@@ -45,11 +45,15 @@ void Enemy::setPath()
 	if (enemy_path.size() < 2) throw std::runtime_error("not enough points in file enemyPath");
 }
 
-void Enemy::move(const float& dtAsSeconds=0.05f)
+void Enemy::move(const float& dtAsSeconds)
 {
-	if (turning) turn(dtAsSeconds);
-	else tryAStep(dtAsSeconds);
-	update();
+	if (alertState == AlertState::NORMAL) {
+		if (turning) turn(dtAsSeconds);
+		else tryAStep(dtAsSeconds);
+		update();
+	}
+	else
+		alertDuration += dtAsSeconds;
 }
 
 void Enemy::tryAStep(const float& dtAsSeconds)
@@ -129,7 +133,14 @@ bool Enemy::sense(const Point& player)
 
 	lightOnPlayer /= 4.f;
 
-	return pointInTriangle(player, a, b, c) && lineOfSight(player) && (lightOnPlayer < 55.f);
+	bool sensed = pointInTriangle(player, a, b, c) && lineOfSight(player) && (lightOnPlayer < 55.f);
+
+	alertState = sensed == true ? AlertState::ALERT : AlertState::NORMAL;
+	
+	if (alertState == AlertState::NORMAL)
+		alertDuration = 0.f;
+
+	return alertDuration > alertDelay ? true : false;
 }
 
 void Enemy::turn(const float& elapsedTime)

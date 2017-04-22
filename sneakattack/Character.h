@@ -46,7 +46,10 @@ private:
 	std::vector<Point> enemy_path;
 	sf::ConvexShape viewcone;
 	RectangleMap Map;
-
+	enum class AlertState {NORMAL, ALERT}; // stay alert for as long as the player is in the viewcone. If player is in view cone for >2s, detect
+	AlertState alertState;
+	const float alertDelay;
+	float alertDuration; // time for which player has been in continuous detection
 
 	// pointAhead is always in range [enemy_path.begin(),enemy_path.end())
 	// before and after every member function call
