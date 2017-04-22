@@ -28,6 +28,7 @@ namespace light
 	
 		turnOn(Pointi(600, 33));
 		turnOn(Pointi(500, 450));
+		turnOn(Pointi(33, 150));
 		updateTiles();	
 	}
 
