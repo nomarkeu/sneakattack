@@ -33,7 +33,8 @@ public:
 	const bool alive() const { return isAlive; }
 	const bool& defend(const Point&);
 	const sf::ConvexShape& getViewcone() const { return viewcone; }
-	bool sense(const Point&);
+	const bool sense(const Point&);
+	const bool isPlayerInLOS() const { return playerInLOS; }
 	//void spot(); 
 
 private:
@@ -50,6 +51,7 @@ private:
 	AlertState alertState;
 	const float alertDelay;
 	float alertDuration; // time for which player has been in continuous detection
+	bool playerInLOS; // whether enemy is in LOS of player, to show viewcone only when player can see enemy in Game::draw()
 
 	// pointAhead is always in range [enemy_path.begin(),enemy_path.end())
 	// before and after every member function call

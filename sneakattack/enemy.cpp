@@ -7,7 +7,7 @@
 #include "utilities.h"
 #include "lightmap.h"
 
-Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile"), alertDelay(2.0f), alertDuration(0.f)
+Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile"), alertDelay(2.0f), alertDuration(0.f), playerInLOS(false)
 {
 
 
@@ -106,7 +106,7 @@ void Enemy::update()
 }
 
 
-bool Enemy::sense(const Point& player)
+const bool Enemy::sense(const Point& player)
 {
 
 	Point a = viewcone.getPoint(0);
@@ -133,7 +133,9 @@ bool Enemy::sense(const Point& player)
 
 	lightOnPlayer /= 4.f;
 
-	bool sensed = pointInTriangle(player, a, b, c) && lineOfSight(player) && (lightOnPlayer < 55.f);
+	lineOfSight(player);
+
+	bool sensed = pointInTriangle(player, a, b, c) && playerInLOS && (lightOnPlayer < 55.f);
 
 	alertState = sensed == true ? AlertState::ALERT : AlertState::NORMAL;
 	
@@ -159,9 +161,9 @@ bool Enemy::lineOfSight(const Point& player)
 	for (const auto& segment : Map.getLineSegments())
 		if (whichside(segment[0], los) != whichside(segment[1], los))
 			if(whichside(player,segment) != whichside(location,segment))
-				return false;
+				return playerInLOS = false;
 
-	return true;
+	return playerInLOS = true;
 }
 
 

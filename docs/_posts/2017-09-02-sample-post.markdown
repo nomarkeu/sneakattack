@@ -12,9 +12,6 @@ Oh and I'm writing this in C++. I decided to use Visual Studio after trying out 
 And after some looking around I decided to use SFML as a media library. SFML is a nice object oriented C++ wrapper for OpenGL. 
 
 
-
-
-
 The first major hurdle was implementing a way to restrict visibility to what can be seen from the player's position. Here's the result.
 
 ![Realitime visibility](http://i.imgur.com/KD28NNo.gif)

@@ -10,7 +10,7 @@ void Game::draw()
 	renderTexture.clear();
 
 	renderTexture.draw(foreground);
-	renderTexture.draw(enemy.getViewcone());
+	if(enemy.isPlayerInLOS()) renderTexture.draw(enemy.getViewcone());
 	renderTexture.draw(enemy.getSprite());
 	renderTexture.draw(player.getSprite());
 	renderTexture.draw(light::lightTiles);
