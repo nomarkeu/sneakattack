@@ -94,8 +94,8 @@ void Enemy::setViewcone()
 	viewcone.setOrigin(location);
 	viewcone.setPosition(location);
 	viewcone.setPoint(0, location);
-	viewcone.setPoint(1, location - Point(200.f, -500.f));
-	viewcone.setPoint(2, location + Point(200.f, 500.f));
+	viewcone.setPoint(1, location - Point(200.f, -1000.f));
+	viewcone.setPoint(2, location + Point(200.f, 1000.f));
 	viewcone.setRotation(heading);	
 }
 
