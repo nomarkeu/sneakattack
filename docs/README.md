@@ -1,1 +1,1 @@
-[A website for the game engine.](www.nomarkeu.github.io/sneakattack)
+[A website for the game engine.](http://nomarkeu.github.io/sneakattack)
