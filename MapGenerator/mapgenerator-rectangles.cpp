@@ -1,3 +1,5 @@
+#OLD VERSION
+
 #include "stdafx.h"
 #include "SFML\Graphics.hpp"
 #include <vector>
