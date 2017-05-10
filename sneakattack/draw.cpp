@@ -15,9 +15,11 @@ void Game::draw()
 	renderTexture.draw(player.getSprite());
 	renderTexture.draw(light::lightTiles);
 	
+	
 	renderTexture.display();
 
 	window.draw(player.getVisibilityPolygon());
+	window.draw(player.getSoundCircle());
 
 	window.display();
 }	

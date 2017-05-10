@@ -7,7 +7,7 @@
 #include "utilities.h"
 #include "lightmap.h"
 
-Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile"), alertDelay(2.0f), alertDuration(0.f), playerInLOS(false)
+Enemy::Enemy(): Character(50.0), isAlive(true), Map("mapfile"), alertDelay(1.0f), alertDuration(0.f), playerInLOS(false)
 {
 
 

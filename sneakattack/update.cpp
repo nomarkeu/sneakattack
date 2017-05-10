@@ -8,7 +8,8 @@
 	 input();
 
 	 sf::Time dt = clock.restart();
-	 float dtAsSeconds = dt.asSeconds();
+	float dtAsSeconds = dt.asSeconds();
+
 
 	// if (thereIsInput()) {
 		 player.move(pressedKeys, dtAsSeconds, window.mapPixelToCoords(sf::Mouse::getPosition(window)));
@@ -20,10 +21,10 @@
 	// if (pressedKeys[key::leftClick])
 		 //if (player.attack(enemy))
 			// gameState = State::killed;
-	 
-	 if (enemy.sense(player.getLocation()))
-		 gameState = State::spotted;
-
-
+		 for (auto& enemy : enemies) {
+			 if (enemy.sense(player.getLocation()))
+				 gameState = State::spotted;
+		 }
+	for(auto& enemy : enemies)
 	 enemy.move(dtAsSeconds);
 }

@@ -9,7 +9,8 @@
 
 
 
-Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertexture.getTexture()), Character(50.0f), runSpeed(2*speed), Map("mapfile"), wallTilecount(15)
+Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertexture.getTexture()),
+Character(50.0f), runSpeed(2 * speed), Map("mapfile"), wallTilecount(15), soundRadius(0), soundRadiusLevels({ {1, 25.f}, {2,100.f},{3,300.f}, })
 {
 	
 	
@@ -51,6 +52,11 @@ Player::Player(sf::RenderTexture& rendertexture) : visibilityPolygon(rendertextu
 	sf::FloatRect boundingBox = sprite.getLocalBounds();
 	sprite.setOrigin(boundingBox.width / 2.f, boundingBox.height / 2.f);
 	location = Point(636.f, 153.f) ;
+
+	soundCircle.setOutlineColor(sf::Color::Blue);
+	soundCircle.setOutlineThickness(2);
+	soundCircle.setFillColor(sf::Color::Transparent);
+	
 	update();
 }
 
@@ -58,10 +64,21 @@ void Player::move(std::map<key, bool>&  pressedKeys,const float& dtAsSeconds, co
 {
 	int vertical = pressedKeys[key::W] - pressedKeys[key::S];
 	int horizontal = pressedKeys[key::D] - pressedKeys[key::A];
-	float pace;
+	float pace=0;
 
-	if (pressedKeys[key::LShift]) pace = runSpeed;
-	else pace = speed;
+	if (pressedKeys[key::LShift]) {
+		pace = runSpeed;
+		soundRadius = soundRadiusLevels.at(3);
+	}
+	else {
+		pace = speed;
+		soundRadius = soundRadiusLevels.at(2);
+	}
+
+	if (vertical == 0 && horizontal == 0)
+		soundRadius = 0;
+	
+
 
 	float dx = horizontal*pace*dtAsSeconds;
 	float dy = -vertical*pace*dtAsSeconds;
@@ -72,6 +89,8 @@ void Player::move(std::map<key, bool>&  pressedKeys,const float& dtAsSeconds, co
 	}
 	location.x += dx;
 	location.y += dy;
+
+	
 
 	float angledy = mousepoint.y - location.y;
 	float angledx = mousepoint.x - location.x;
@@ -91,6 +110,10 @@ void Player::update()
 	visibilityPolygon.clear();
 	visibility( Map.getLineSegments(), Map.getAllPoints(),location, visibilityPolygon);
 	visibilityPolygon.setTexture();
+
+	soundCircle.setRadius(soundRadius);
+	soundCircle.setPosition(location);
+	soundCircle.setOrigin(soundRadius,soundRadius);	
 }
 
 void Player::updategridTiles()

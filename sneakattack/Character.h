@@ -35,6 +35,7 @@ public:
 	const sf::ConvexShape& getViewcone() const { return viewcone; }
 	const bool sense(const Point&);
 	const bool isPlayerInLOS() const { return playerInLOS; }
+
 	//void spot(); 
 
 private:
@@ -85,18 +86,24 @@ public:
 	const bool& attack(Enemy& enemy) const { return enemy.defend(this->getLocation()); }
 	const Point& getLocation() const { return location; }
 	const Triangles& getVisibilityPolygon() const { return visibilityPolygon; }
+	const float getSoundRadius() const { return soundRadius; }
+	const sf::CircleShape& getSoundCircle() const { return soundCircle; }
 
 private:
 
 	Player();
 
 	Triangles visibilityPolygon;
-	float runSpeed;
+	const float runSpeed;
 	RectangleMap Map;
 	std::array<int, 9> gridTiles;
 	int wallTilecount;
 	std::vector<int> level;
 	mutable std::vector<int> wallTilesNearby;
+	sf::CircleShape soundCircle;
+	float soundRadius;
+	const std::map<int, float> soundRadiusLevels;
+	
 
 	void updategridTiles();
 	void update();

@@ -101,4 +101,8 @@ Effective C++
 - make class specific contants static
 - in-class initialisation is only allowed for integral types and only for constants
 - conceptual constness?
-- 
+
+
+
+Implement sound visually
+

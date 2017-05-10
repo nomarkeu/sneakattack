@@ -27,7 +27,8 @@ private:
 	RectangleMap Map;
 	
 	Player player;
-	Enemy enemy;
+	std::vector<Enemy> enemies;
+	
 
 	void readTileMap();
 	bool thereIsInput();

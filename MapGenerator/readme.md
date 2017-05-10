@@ -1,0 +1,1 @@
+A GUI line drawing application for creating the input for visibility algorithm from an image of the map.
