@@ -3,6 +3,8 @@
 #include "SFML/Graphics/Color.hpp"
 #include "RectangleMap.h"
 #include "visibilitypolygon.h"
+// namespace which handles all the lighting related functions.
+
 
 typedef sf::Vector2i Pointi;
 

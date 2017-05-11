@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 
-class Character {
+class Character { // base class of enemies and player
 public:
 	 const sf::RectangleShape& getSprite() const { return sprite; }
 	Character(float s) : speed(s) {}
@@ -68,7 +68,7 @@ private:
 	}
 
 
-	bool lineOfSight(const Point& player);
+	bool lineOfSight(const Point& player); // checks if the player is in line of sight. Part of checking if enemy can see player
 	
 	void update();
 };
@@ -99,7 +99,7 @@ private:
 	std::array<int, 9> gridTiles;
 	int wallTilecount;
 	std::vector<int> level;
-	mutable std::vector<int> wallTilesNearby;
+	mutable std::vector<int> wallTilesNearby; // vector of walltiles near to player in a 9x9 grid around player
 	sf::CircleShape soundCircle;
 	float soundRadius;
 	const std::map<int, float> soundRadiusLevels;
@@ -107,7 +107,7 @@ private:
 
 	void updategridTiles();
 	void update();
-	bool potentialCollision() const;
-	void collide() ;
+	bool potentialCollision() const; // checks if there are any collidable objects in wallTilesNearby
+	void collide() ; // executes the collision and adjusts the position
 	
 };

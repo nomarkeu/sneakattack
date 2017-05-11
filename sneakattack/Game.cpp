@@ -5,7 +5,7 @@
 
 Game::Game() : gameState(State::running), Map("mapfile"), actionState(ActionState::NONE), zoomLevel(1.5f), player(renderTexture)
 {
-	light::init(&Map);
+	light::init(&Map); // display all the lights
 	gameView.setSize(Point(1280, 960));
 	renderTexture.create(1280, 960);
 
