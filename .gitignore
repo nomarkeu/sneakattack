@@ -4,6 +4,8 @@
 #Projects
 /Visibility
 /TileMap
+/MapGenerator/background.jpg
+/MapGenerator/mapgenerator-rectangles.cpp
 design_document.md
 
 #DLLs
