@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "MapGenerator.h"
 
-using std::vector;
-
 int main()
 {
 
