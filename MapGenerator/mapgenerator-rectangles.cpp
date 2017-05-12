@@ -1,4 +1,4 @@
-#OLD VERSION
+//OLD VERSION
 
 #include "stdafx.h"
 #include "SFML\Graphics.hpp"
